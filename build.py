@@ -28,7 +28,7 @@ output = "a.exe"
 
 include_str = ""
 for directory in includes:
-    include_str += f"-I{directory}/ "
+    include_str += f"-I\"{directory}/\" "
 
 sources_str = ""
 for src in sources:
