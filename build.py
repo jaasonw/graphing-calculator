@@ -8,10 +8,12 @@ except:
 
 includes = []
 includes.append("include")
+includes.append("include/engine")
 includes.append("[sfml include path]")
 
 sources = []
 sources.append("src")
+sources.append("src/engine")
 
 link = []
 link.append("sfml-audio")
@@ -33,7 +35,8 @@ for directory in includes:
 sources_str = ""
 for src in sources:
     for _file in os.listdir(src):
-        sources_str += f"{src}/{_file} "
+        if (not os.path.isdir(f"{src}/{_file} ")):
+            sources_str += f"{src}/{_file} "
 
 link_str = ""
 for l in link:
