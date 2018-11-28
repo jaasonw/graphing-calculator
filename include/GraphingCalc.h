@@ -7,8 +7,3 @@ private:
 public:
     GraphingCalc();
 };
-
-GraphingCalc::GraphingCalc() : engine() {
-    engine.create_instance(new Graph());
-    engine.run();
-}
