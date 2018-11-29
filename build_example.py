@@ -8,11 +8,13 @@ except:
 
 includes = []
 includes.append("include")
+includes.append("include/rpn")
 includes.append("include/engine")
 includes.append("[sfml include path]")
 
 sources = []
 sources.append("src")
+sources.append("src/rpn")
 sources.append("src/engine")
 
 link = []
