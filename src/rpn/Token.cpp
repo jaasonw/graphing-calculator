@@ -1,4 +1,4 @@
-#include "../include/Token.h"
+#include "rpn/Token.h"
 #include <iostream>
 
 std::ostream &operator<<(std::ostream &out, const Token &t) {

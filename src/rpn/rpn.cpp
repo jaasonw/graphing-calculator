@@ -1,4 +1,4 @@
-#include "rpn.h"
+#include "rpn/rpn.h"
 
 double eval(Queue<Token*> tokens, double variable) {
     Stack<Token*> call_stack = Stack<Token*>();

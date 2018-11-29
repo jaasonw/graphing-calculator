@@ -1,9 +1,9 @@
-#include "../include/Operand.h"
-#include "../include/Operator.h"
-#include "../include/Token.h"
-#include "../include/constants.h"
-#include "../include/stack_queue/queue.h"
-#include "../include/stack_queue/stack.h"
+#include "Operand.h"
+#include "Operator.h"
+#include "Token.h"
+#include "constants.h"
+#include "stack_queue/queue.h"
+#include "stack_queue/stack.h"
 #include <string>
 #include <cctype>
 

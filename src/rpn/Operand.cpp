@@ -1,4 +1,4 @@
-#include "../include/Operand.h"
+#include "rpn/Operand.h"
 #include <iostream>
 
 Operand::Operand() : number(0) {}

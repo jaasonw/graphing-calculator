@@ -1,4 +1,4 @@
-#include "../include/Variable.h"
+#include "rpn/Variable.h"
 #include <cassert>
 #include <iostream>
 
