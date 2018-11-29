@@ -2,11 +2,11 @@
 #include "constants.h"
 
 Graph::Graph() {
-    this->set_x(SCREEN_WIDTH / 2);
-    this->set_y(SCREEN_HEIGHT / 2);
+    this->set_x(SCREEN_HEIGHT / 2);
+    this->set_y(SCREEN_WIDTH / 2);
     
-    this->x_axis = sf::RectangleShape(sf::Vector2f(SCREEN_WIDTH, LINE_THICKNESS));
-    this->y_axis = sf::RectangleShape(sf::Vector2f(LINE_THICKNESS, SCREEN_HEIGHT));
+    this->x_axis = sf::RectangleShape(sf::Vector2f(SCREEN_HEIGHT, LINE_THICKNESS));
+    this->y_axis = sf::RectangleShape(sf::Vector2f(LINE_THICKNESS, SCREEN_WIDTH));
 
     this->x_axis.setFillColor(AXIS_COLOR);
     this->y_axis.setFillColor(AXIS_COLOR);
