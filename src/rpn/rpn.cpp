@@ -30,6 +30,15 @@ double eval(Queue<Token*> tokens, double variable) {
     Token* result = call_stack.pop();
     double result_number = static_cast<Operand*>(result)->get_number();
     delete result;
+
+    // clean up the rest of the queue & stack if for some reason they're not
+    // empty
+    while (!tokens.empty()) {
+        delete tokens.pop();
+    }
+    while (!call_stack.empty()) {
+        delete call_stack.pop();
+    }
     return result_number;
 }
 
