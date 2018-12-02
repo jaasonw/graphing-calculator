@@ -3,6 +3,7 @@
 
 class Entity {
 private:
+    bool visible = true;
     double screen_x;
     double screen_y;
 
@@ -21,4 +22,7 @@ public:
 
     double get_x() { return screen_x; }
     double get_y() { return screen_y; }
+
+    bool is_visible() { return visible; }
+    bool toggle_visible() { return visible = !visible; }
 };

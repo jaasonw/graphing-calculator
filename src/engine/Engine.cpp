@@ -20,7 +20,8 @@ void Engine::run() {
         window.clear();
         // render loop
         for (int i = 0; i < entities.size(); i++) {
-            entities.at(i)->render(window);
+            if (entities.at(i)->is_visible())
+                entities.at(i)->render(window);
         }
         window.display();
     }
