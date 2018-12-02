@@ -25,4 +25,5 @@ public:
 
     bool is_visible() { return visible; }
     bool toggle_visible() { return visible = !visible; }
+    void set_visible(bool visible) { this->visible = visible; }
 };
