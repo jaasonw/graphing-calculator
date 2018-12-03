@@ -5,7 +5,7 @@ class Point : public Entity {
 private:
     double graph_x;
     double graph_y;
-    const double RADIUS = 3.5;
+    const double RADIUS = 1;
     sf::Color color = sf::Color::Red;
     sf::CircleShape point;
 

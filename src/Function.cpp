@@ -1,26 +1,11 @@
 #include "Function.h"
 #include "engine/Engine.h"
+#include <iostream>
 
 Function::Function() : Entity() {
-    points.push_back(new Point(-3, -3));
-    points.push_back(new Point(-2, -2));
-    points.push_back(new Point(-1, -1));
-    points.push_back(new Point(0, 0));
-    points.push_back(new Point(1, 1));
-    points.push_back(new Point(2, 2));
-    points.push_back(new Point(3, 3));
-    points.push_back(new Point(4, 4));
-    points.push_back(new Point(5, 5));
-    points.push_back(new Point(6, 6));
-    points.push_back(new Point(7, 7));
-    points.push_back(new Point(8, 8));
-    points.push_back(new Point(9, 9));
-    points.push_back(new Point(10, 10));
-    points.push_back(new Point(11, 11));
-    points.push_back(new Point(12, 12));
-    points.push_back(new Point(13, 13));
-    points.push_back(new Point(14, 14));
-    points.push_back(new Point(15, 15));
+    for (double i = interval_start; i < interval_end; i += point_frequency) {
+        points.push_back(new Point(i, sin(i)));
+    }
 }
 Function::~Function() {
     for (auto point : points) {
@@ -36,7 +21,7 @@ void Function::render(sf::RenderWindow& window) {
         double y2 = -((points[i + 1]->get_graph_y() * this->zoom)) + origin_y;
 
         if (i < points.size() - 1) {
-            window.draw(create_line_thickness(x1, y1, x2, y2, line_thickness, color));
+            // window.draw(create_line_thickness(x1, y1, x2, y2, line_thickness, color));
         }
         points[i]->plot(x1, y1);
     }

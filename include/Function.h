@@ -10,11 +10,11 @@
 
 class Function : public Entity {
 private:
-    double interval_start;
-    double interval_end;
-    double point_frequency;
+    double interval_start = -10;
+    double interval_end = 10;
+    double point_frequency = 0.01;
     double zoom;
-    double line_thickness = 1.5;
+    double line_thickness = 2;
     sf::Color color = sf::Color::Red;
     // the screen x and y of the origin
     double origin_x;
