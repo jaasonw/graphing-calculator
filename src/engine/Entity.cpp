@@ -2,7 +2,7 @@
 #include "engine/Engine.h"
 
 Entity::Entity() : screen_x(0), screen_y(0) {
-    Engine::create_instance(this);
+    Engine::add_entity(this);
 }
 Entity::~Entity() {}
 

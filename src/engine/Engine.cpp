@@ -30,7 +30,7 @@ void Engine::run() {
     }
 }
 
-Entity* Engine::create_instance(Entity* entity) {
+Entity* Engine::add_entity(Entity* entity) {
     entities.push_back(entity);
     return entity;
 }

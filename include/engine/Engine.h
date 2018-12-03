@@ -13,5 +13,5 @@ private:
 public:
     Engine();
     void run();
-    static Entity* create_instance(Entity* entity);
+    static Entity* add_entity(Entity* entity);
 };
