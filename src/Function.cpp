@@ -2,6 +2,9 @@
 #include "engine/Engine.h"
 
 Function::Function() : Entity() {
+    points.push_back(new Point(-3, -3));
+    points.push_back(new Point(-2, -2));
+    points.push_back(new Point(-1, -1));
     points.push_back(new Point(0, 0));
     points.push_back(new Point(1, 1));
     points.push_back(new Point(2, 2));
