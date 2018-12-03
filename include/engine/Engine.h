@@ -9,9 +9,10 @@ class Engine {
 private:
     static std::vector<Entity*> entities;
     sf::RenderWindow window;
-
+    
 public:
     Engine();
     void run();
     static Entity* add_entity(Entity* entity);
+    static void remove_entity(Entity* entity);
 };
