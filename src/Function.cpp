@@ -15,7 +15,8 @@ Function::Function() : Entity() {
     points.push_back(new Point(10, 10));
     points.push_back(new Point(11, 11));
     points.push_back(new Point(12, 12));
-    points.push_back(new Point(13, 14));
+    points.push_back(new Point(13, 13));
+    points.push_back(new Point(14, 14));
     points.push_back(new Point(15, 15));
 }
 Function::~Function() {
@@ -26,8 +27,8 @@ Function::~Function() {
 void Function::step() {}
 void Function::render(sf::RenderWindow& window) {
     for (auto point : points) {
-        point->plot(point->get_graph_x() + (origin_x * this->zoom),
-                    point->get_graph_y() + (origin_y * this->zoom));
+        point->plot((point->get_graph_x() * this->zoom) + origin_x,
+                    (point->get_graph_y() * this->zoom) + origin_y);
     }
 }
 
