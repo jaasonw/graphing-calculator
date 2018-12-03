@@ -1,6 +1,6 @@
 #include "GraphingCalc.h"
 
 GraphingCalc::GraphingCalc() {
-    engine.create_instance(new Graph());
+    new Graph();
     engine.run();
 }

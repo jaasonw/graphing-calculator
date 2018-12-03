@@ -1,7 +1,6 @@
 #include "Graph.h"
-#include "constants.h"
 
-Graph::Graph() {
+Graph::Graph() : Entity() {
     this->set_x(SCREEN_HEIGHT / 2);
     this->set_y(SCREEN_WIDTH / 2);
     
@@ -10,6 +9,9 @@ Graph::Graph() {
 
     this->x_axis.setFillColor(AXIS_COLOR);
     this->y_axis.setFillColor(AXIS_COLOR);
+
+    // functions
+    this->functions.push_back(new Function());
 }
 
 void Graph::render(sf::RenderWindow& window) {
@@ -20,7 +22,12 @@ void Graph::render(sf::RenderWindow& window) {
     this->y_axis.setOrigin(sf::Vector2f(this->y_axis.getSize().x / 2, this->y_axis.getSize().y / 2));
     this->y_axis.setPosition(sf::Vector2f(this->get_x(), this->get_y()));
 
-    // draw
+    // draw functions
+    for (auto function : functions) {
+        function->plot(this->get_x(), this->get_y(), ZOOM_TO_PIXEL_SCALE);
+    }
+
+    // draw axis
     window.draw(this->x_axis);
     window.draw(this->y_axis);
 }
