@@ -26,9 +26,18 @@ Function::~Function() {
 }
 void Function::step() {}
 void Function::render(sf::RenderWindow& window) {
-    for (auto point : points) {
-        point->plot((point->get_graph_x() * this->zoom) + origin_x,
-                    (point->get_graph_y() * this->zoom) + origin_y);
+    // Point* prevPoint = NULL;
+    // Point* nextPoint = NULL;
+    for (int i = 0; i < points.size(); i++) {
+        double x1 = (points[i]->get_graph_x() * this->zoom) + origin_x;
+        double y1 = -((points[i]->get_graph_y() * this->zoom)) + origin_y;
+        double x2 = (points[i + 1]->get_graph_x() * this->zoom) + origin_x;
+        double y2 = -((points[i + 1]->get_graph_y() * this->zoom)) + origin_y;
+
+        if (i < points.size() - 1) {
+            window.draw(create_line_thickness(x1, y1, x2, y2, line_thickness, color));
+        }
+        points[i]->plot(x1, y1);
     }
 }
 

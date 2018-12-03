@@ -3,12 +3,14 @@
 Point::Point() : Entity() {
     this->point.setRadius(RADIUS);
     this->point.setFillColor(color);
+    this->point.setOrigin(sf::Vector2f(RADIUS, RADIUS));
 }
 
 Point::Point(double graph_x, double graph_y)
     : graph_x(graph_x), graph_y(graph_y) {
     this->point.setRadius(RADIUS);
     this->point.setFillColor(color);
+    this->point.setOrigin(sf::Vector2f(RADIUS, RADIUS));
 }
 Point::~Point() {}
 void Point::step() {}
