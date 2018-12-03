@@ -25,7 +25,7 @@ private:
 public:
     Function();
     ~Function();
-    void step();
+    void step(sf::RenderWindow& window);
     void render(sf::RenderWindow& window);
 
     // pass in the screen coordinates of the graph origin

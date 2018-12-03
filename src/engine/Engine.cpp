@@ -16,7 +16,7 @@ void Engine::run() {
         }
         // step loop
         for (int i = 0; i < entities.size(); i++) {
-            entities.at(i)->step();
+            entities.at(i)->step(window);
         }
         window.clear();
         // render loop

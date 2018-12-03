@@ -8,5 +8,5 @@ Entity::~Entity() {
     Engine::remove_entity(this);
 }
 
-void Entity::step() {}
+void Entity::step(sf::RenderWindow& window) {}
 void Entity::render(sf::RenderWindow& window) {}

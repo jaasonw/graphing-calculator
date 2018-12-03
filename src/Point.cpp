@@ -13,7 +13,7 @@ Point::Point(double graph_x, double graph_y)
     this->point.setOrigin(sf::Vector2f(RADIUS, RADIUS));
 }
 Point::~Point() {}
-void Point::step() {}
+void Point::step(sf::RenderWindow& window) {}
 
 void Point::render(sf::RenderWindow& window) { window.draw(this->point); }
 
