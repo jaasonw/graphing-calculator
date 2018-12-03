@@ -1,6 +1,6 @@
 #include "engine/Engine.h"
 
-std::vector<Entity*> Engine::entities = std::vector<Entity*>();
+List<Entity*> Engine::entities = List<Entity*>();
 
 Engine::Engine() : window(sf::VideoMode(SCREEN_HEIGHT, SCREEN_WIDTH), "hihi") {
     window.setFramerateLimit(FPS);
@@ -15,14 +15,13 @@ void Engine::run() {
                 window.close();
         }
         // step loop
-        for (int i = 0; i < entities.size(); i++) {
-            entities.at(i)->step();
+        for (auto it = entities.begin(); it != NULL; it++) {
+            (*it)->step();
         }
         window.clear();
         // render loop
-        for (int i = 0; i < entities.size(); i++) {
-            if (entities.at(i)->is_visible())
-                entities.at(i)->render(window);
+        for (auto it = entities.begin(); it != NULL; it++) {
+            (*it)->render(window);
         }
         window.display();
         double fps = (1000000.0 / clock.restart().asMicroseconds());
@@ -31,6 +30,12 @@ void Engine::run() {
 }
 
 Entity* Engine::add_entity(Entity* entity) {
-    entities.push_back(entity);
+    entities.insert_head(entity);
+    
+    // entities.insert_after(entities.begin(), entity);
     return entity;
+}
+
+void Engine::remove_entity(Entity* entity) {
+    entities.del(entities.search(entity));
 }
