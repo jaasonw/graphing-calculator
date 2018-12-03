@@ -1,12 +1,13 @@
 #include "engine/Engine.h"
 
-Engine::Engine()
-    : entities(std::vector<Entity*>()),
-      window(sf::VideoMode(SCREEN_HEIGHT, SCREEN_WIDTH), "hihi") {
+std::vector<Entity*> Engine::entities = std::vector<Entity*>();
+
+Engine::Engine() : window(sf::VideoMode(SCREEN_HEIGHT, SCREEN_WIDTH), "hihi") {
     window.setFramerateLimit(FPS);
 }
 
 void Engine::run() {
+    sf::Clock clock;
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -24,10 +25,12 @@ void Engine::run() {
                 entities.at(i)->render(window);
         }
         window.display();
+        double fps = (1000000.0 / clock.restart().asMicroseconds());
+        window.setTitle("FPS: " + std::to_string(fps));
     }
 }
 
 Entity* Engine::create_instance(Entity* entity) {
-    this->entities.push_back(entity);
+    entities.push_back(entity);
     return entity;
 }
