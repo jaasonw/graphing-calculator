@@ -26,8 +26,6 @@ Function::~Function() {
 }
 void Function::step() {}
 void Function::render(sf::RenderWindow& window) {
-    // Point* prevPoint = NULL;
-    // Point* nextPoint = NULL;
     for (int i = 0; i < points.size(); i++) {
         double x1 = (points[i]->get_graph_x() * this->zoom) + origin_x;
         double y1 = -((points[i]->get_graph_y() * this->zoom)) + origin_y;
