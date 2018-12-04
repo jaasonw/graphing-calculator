@@ -51,3 +51,5 @@ os.system(cmd)
 t1 = time.time()
 os.system(cmd)
 t2 = time.time()
+
+print("Operation time Elapsed:", f'{t2 - t1:.2f}', "seconds")
