@@ -5,12 +5,12 @@ Graph::Graph() : Entity() {
     this->SourceCodePro.loadFromFile("SourceCodePro-Regular.ttf");
 
     // set position
-    this->set_x(SCREEN_HEIGHT / 2);
-    this->set_y(SCREEN_WIDTH / 2);
+    this->set_x(SCREEN_WIDTH / 2);
+    this->set_y(SCREEN_HEIGHT / 2);
     
     // create axis
-    this->x_axis = sf::RectangleShape(sf::Vector2f(SCREEN_HEIGHT * 1000, LINE_THICKNESS));
-    this->y_axis = sf::RectangleShape(sf::Vector2f(LINE_THICKNESS, SCREEN_WIDTH * 1000));
+    this->x_axis = sf::RectangleShape(sf::Vector2f(SCREEN_WIDTH * 1000, LINE_THICKNESS));
+    this->y_axis = sf::RectangleShape(sf::Vector2f(LINE_THICKNESS, SCREEN_HEIGHT * 1000));
 
     // color axis
     this->x_axis.setFillColor(AXIS_COLOR);

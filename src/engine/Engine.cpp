@@ -3,7 +3,7 @@
 // static vars
 std::vector<Entity*> Engine::entities = std::vector<Entity*>();
 
-Engine::Engine() : window(sf::VideoMode(SCREEN_HEIGHT, SCREEN_WIDTH), "hihi") {
+Engine::Engine() : window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "hihi") {
     window.setFramerateLimit(FPS);
 }
 
