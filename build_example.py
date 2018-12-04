@@ -1,5 +1,6 @@
 # trash ass build script xd
 import os
+import time
 
 try:
     os.remove('a.exe')
@@ -47,3 +48,6 @@ for l in link:
 cmd = f"{compiler} {flags} {include_str} -o {output} main.cpp {sources_str}"
 print(cmd)
 os.system(cmd)
+t1 = time.time()
+os.system(cmd)
+t2 = time.time()
