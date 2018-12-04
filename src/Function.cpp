@@ -14,7 +14,7 @@ Function::~Function() {
 }
 void Function::step(sf::RenderWindow& window, const sf::Event& event) {}
 void Function::render(sf::RenderWindow& window) {
-    for (int i = 0; i < points.size(); i++) {
+    for (unsigned int i = 0; i < points.size(); i++) {
         double x = (points[i]->get_graph_x() * this->zoom) + origin_x;
         double y = -((points[i]->get_graph_y() * this->zoom)) + origin_y;
         points[i]->plot(x, y);

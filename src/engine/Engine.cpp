@@ -16,12 +16,12 @@ void Engine::run() {
                 window.close();
         }
         // step loop
-        for (int i = 0; i < entities.size(); i++) {
+        for (unsigned int i = 0; i < entities.size(); i++) {
             entities.at(i)->step(window, event);
         }
         window.clear();
         // render loop
-        for (int i = 0; i < entities.size(); i++) {
+        for (unsigned int i = 0; i < entities.size(); i++) {
             if (entities.at(i)->is_visible())
                 entities.at(i)->render(window);
         }
@@ -37,7 +37,7 @@ Entity* Engine::add_entity(Entity* entity) {
 }
 
 void Engine::remove_entity(Entity* entity) {
-    for (int i = 0; i < entities.size(); i++) {
+    for (unsigned int i = 0; i < entities.size(); i++) {
         if (entities[i] == entity) {
             // replace entity at i with last element
             entities[i] = entities[entities.size() - 1];

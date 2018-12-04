@@ -18,6 +18,7 @@ double Operator::operate(double a, double b) {
         default:
             assert("unsupported operation" == "");
     }
+    return -1;
 }
 int Operator::precedence() const {
     switch (this->_symbol) {
