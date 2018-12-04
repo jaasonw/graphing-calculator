@@ -10,9 +10,9 @@
 
 class Function : public Entity {
 private:
-    double interval_start = -10;
-    double interval_end = 10;
-    double point_frequency = 0.01;
+    double interval_start = -50;
+    double interval_end = 50;
+    double point_frequency = 0.03;
     double zoom;
     double line_thickness = 2;
     sf::Color color = sf::Color::Red;
@@ -25,7 +25,7 @@ private:
 public:
     Function();
     ~Function();
-    void step(sf::RenderWindow& window);
+    void step(sf::RenderWindow& window, const sf::Event& event);
     void render(sf::RenderWindow& window);
 
     // pass in the screen coordinates of the graph origin

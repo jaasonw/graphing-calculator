@@ -13,7 +13,7 @@ public:
     Point();
     Point(double graph_x, double graph_y);
     ~Point();
-    void step(sf::RenderWindow& window);
+    void step(sf::RenderWindow& window, const sf::Event& event);
     void render(sf::RenderWindow& window);
 
     void plot(double screen_x, double screen_y);

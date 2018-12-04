@@ -1,5 +1,6 @@
 #include "engine/Engine.h"
 
+// static vars
 std::vector<Entity*> Engine::entities = std::vector<Entity*>();
 
 Engine::Engine() : window(sf::VideoMode(SCREEN_HEIGHT, SCREEN_WIDTH), "hihi") {
@@ -10,13 +11,13 @@ void Engine::run() {
     sf::Clock clock;
     while (window.isOpen()) {
         sf::Event event;
-        while (window.pollEvent(event)) {
+        if (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
         // step loop
         for (int i = 0; i < entities.size(); i++) {
-            entities.at(i)->step(window);
+            entities.at(i)->step(window, event);
         }
         window.clear();
         // render loop

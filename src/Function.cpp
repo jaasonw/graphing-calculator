@@ -12,7 +12,7 @@ Function::~Function() {
         delete point;
     }
 }
-void Function::step(sf::RenderWindow& window) {}
+void Function::step(sf::RenderWindow& window, const sf::Event& event) {}
 void Function::render(sf::RenderWindow& window) {
     for (int i = 0; i < points.size(); i++) {
         double x1 = (points[i]->get_graph_x() * this->zoom) + origin_x;
