@@ -25,6 +25,6 @@ public:
     void set_graph_x(double graph_x) { this->graph_x = graph_x; }
     void set_graph_y(double graph_y) { this->graph_y = graph_y; }
 
-    sf::Color get_color(sf::Color color) { return this->color; }
+    sf::Color get_color() { return this->color; }
     void set_color(sf::Color color) { this->color = color; }
 };

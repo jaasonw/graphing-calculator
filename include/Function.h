@@ -31,6 +31,6 @@ public:
     // pass in the screen coordinates of the graph origin
     void plot(double screen_x, double screen_y, double zoom);
 
-    sf::Color get_color(sf::Color color) { return this->color; }
+    sf::Color get_color() { return this->color; }
     void set_color(sf::Color color) { this->color = color; }
 };
