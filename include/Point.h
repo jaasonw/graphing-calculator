@@ -1,5 +1,6 @@
 #pragma once
 #include "engine/Entity.h"
+#include "constants.h"
 
 class Point : public Entity {
 private:
