@@ -7,8 +7,8 @@ double eval(Queue<Token*> tokens, double variable) {
         switch(current_token->TypeOf()) {
             case OPERATOR: {
                 Operator* operator_token = static_cast<Operator*>(current_token);
-                Operand* left = static_cast<Operand*>(call_stack.pop());
                 Operand* right = static_cast<Operand*>(call_stack.pop());
+                Operand* left = static_cast<Operand*>(call_stack.pop());
                 call_stack.push(new Operand(operator_token->operate(left->get_number(), right->get_number())));
                 delete left;
                 delete right;

@@ -23,7 +23,7 @@ int main() {
     infix.push(new Operator('*'));
     infix.push(new Operand(3));
     infix.push(new Operator(')'));
-    infix.push(new Operator('-'));
+    infix.push(new Operator('+'));
     infix.push(new Operand(4));
     infix.push(new Operator('*'));
     infix.push(new Operand(5));
@@ -31,7 +31,7 @@ int main() {
     infix.push(new Operator('/'));
     infix.push(new Operand(6));
     infix.push(new Operator('+'));
-    infix.push(new FunctionToken("sqrt"));
+    infix.push(new FunctionToken("ssqrt"));
     infix.push(new Operator('('));
     infix.push(new Operand(7));
     infix.push(new Operator('+'));
