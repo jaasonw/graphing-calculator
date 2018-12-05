@@ -96,3 +96,20 @@ Queue<Token*> infix_to_postfix(Queue<Token*> infix) {
     }
     return tokens;
 }
+
+// takes an equation string and counts the number of mismatched parenthesis
+// returns a negative for number of left parenthesis missing
+// returns a positive for number of right parenthesis missing
+int find_mismatched_parenthesis(std::string equation) {
+    int left = 0;
+    int right = 0;
+    for (int i = 0; i < equation.size(); i++) {
+        if (equation.at(i) == '(') {
+            left++;
+        }
+        if (equation.at(i) == ')') {
+            right++;
+        }
+    }
+    return left - right;
+}

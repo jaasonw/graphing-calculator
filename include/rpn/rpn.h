@@ -11,3 +11,5 @@
 double eval(Queue<Token*> tokens, double variable = 0);
 
 Queue<Token*> infix_to_postfix(Queue<Token*> infix);
+
+int find_mismatched_parenthesis(std::string equation);
