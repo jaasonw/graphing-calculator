@@ -6,6 +6,7 @@ template <typename T>
 class Stack {
 private:
     List<T> list;
+    int length;
 public:
     class Iterator {
     private:
@@ -45,6 +46,7 @@ public:
     Iterator begin() const;
     Iterator end() const;
     bool empty() const;
+    int size() const;
 
     template <typename U>
     friend std::ostream& operator<<(std::ostream& outs, const Stack<U>& stack);
@@ -61,11 +63,14 @@ Stack<T>::Stack(const T& item) {
 
 template <typename T>
 void Stack<T>::push(const T& item) {
+    this->length++;
     this->list.insert_head(item);
 }
 
 template <typename T>
 T Stack<T>::pop() {
+    if (this->list.begin() != NULL)
+        this.length--;
     return this->list.del(this->list.begin());
 }
 
@@ -82,6 +87,11 @@ typename Stack<T>::Iterator Stack<T>::end() const {
 template <typename T>
 bool Stack<T>::empty() const {
     return this->list.empty();
+}
+
+template <typename T>
+int Stack<T>::size() const {
+    return this->list.length;
 }
 
 template <typename U>
