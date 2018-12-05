@@ -15,16 +15,21 @@ double eval(Queue<Token*> tokens, double variable) {
                 delete current_token;
                 break;
             }
-            case NUMBER: {
+            case NUMBER:
                 call_stack.push(current_token);
                 break;
-            }
-            case VARIABLE: {
+            case VARIABLE:
                 // push in operand to take the place of the variable
                 call_stack.push(new Operand(variable));
                 // make sure to delete the variable token
                 delete current_token;
-            }
+                break;
+            case FUNCTION:
+                FunctionToken* function_token = static_cast<FunctionToken*>(current_token);
+                Operand* num = static_cast<Operand*>(call_stack.pop());
+                call_stack.push(new Operand(function_token->operate(num->get_number())));
+                delete num;
+                break;
         }
     }
     Token* result = call_stack.pop();
@@ -49,6 +54,9 @@ Queue<Token*> infix_to_postfix(Queue<Token*> infix) {
         Token* token = infix.pop();
         if (token->TypeOf() == NUMBER) {
             tokens.push(token);
+        }
+        else if (token->TypeOf() == FUNCTION) {
+            operators.push(token);
         }
         else if (token->TypeOf() == OPERATOR) {
             Operator* op = static_cast<Operator*>(token);

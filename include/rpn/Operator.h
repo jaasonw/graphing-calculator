@@ -1,6 +1,7 @@
 #pragma once
 #include "Token.h"
-#include "constants.h"
+#include "rpn_constants.h"
+#include <cmath>
 #include <iostream>
 
 class Operator : public Token

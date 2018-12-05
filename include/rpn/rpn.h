@@ -1,11 +1,12 @@
 #include "Operand.h"
 #include "Operator.h"
+#include "FunctionToken.h"
 #include "Token.h"
-#include "constants.h"
+#include "rpn_constants.h"
 #include "stack_queue/queue.h"
 #include "stack_queue/stack.h"
-#include <string>
 #include <cctype>
+#include <string>
 
 double eval(Queue<Token*> tokens, double variable = 0);
 

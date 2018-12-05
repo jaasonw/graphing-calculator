@@ -1,6 +1,6 @@
 #pragma once
 #include "Token.h"
-#include "constants.h"
+#include "rpn_constants.h"
 #include <iostream>
 
 class Operand : public Token

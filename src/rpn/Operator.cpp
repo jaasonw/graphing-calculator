@@ -15,6 +15,8 @@ double Operator::operate(double a, double b) {
             return a * b;
         case '/':
             return a / b;
+        case '^':
+            return pow(a, b);
         default:
             assert("unsupported operation" == "");
     }
@@ -30,6 +32,8 @@ int Operator::precedence() const {
             return MULTIPLICATION;
         case '/':
             return DIVISION;
+        case '^':
+            return EXPONENT;
         default:
             return -1;
     }
