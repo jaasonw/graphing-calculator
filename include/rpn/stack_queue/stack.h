@@ -70,7 +70,7 @@ void Stack<T>::push(const T& item) {
 template <typename T>
 T Stack<T>::pop() {
     if (this->list.begin() != NULL)
-        this.length--;
+        this->length--;
     return this->list.del(this->list.begin());
 }
 
