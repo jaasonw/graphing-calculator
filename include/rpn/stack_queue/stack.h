@@ -53,12 +53,13 @@ public:
     
 };
 template <typename T>
-Stack<T>::Stack() {
+Stack<T>::Stack() : length(0) {
     this->list = List<T>();
 }
 template <typename T>
 Stack<T>::Stack(const T& item) {
     this->list = List<T>(item);
+    this->length = 1;
 }
 
 template <typename T>

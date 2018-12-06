@@ -8,6 +8,7 @@ class Queue {
 private:
     Node<T>* head;
     Node<T>* tail;
+    int length;
 public:
     class Iterator {
     private:
@@ -48,12 +49,13 @@ public:
     Iterator begin() const;
     Iterator end() const;
     bool empty() const;
+    int size() const;
 
     template <typename U>
     friend std::ostream& operator<<(std::ostream& outs, const Queue<U>& Queue);
 };
 template <typename T>
-Queue<T>::Queue() {
+Queue<T>::Queue() : length(0){
     this->head = NULL;
     this->tail = NULL;
 }
@@ -73,12 +75,14 @@ template <typename T>
 Queue<T>::Queue(const T& item) {
     this->head = InsertHead(this->head, item);
     this->tail = this->head;
+    this->length = 1;
 }
 template <typename T>
 Queue<T>::Queue(const Queue<T>& other) {
     this->head = CopyList(other.head);
     Node<T>* null = NULL;
     this->tail = PreviousNode(this->head, null);
+    this->length = other.length;
 }
 
 template <typename T>
@@ -97,12 +101,14 @@ void Queue<T>::push(const T& item) {
     else {
         this->tail = InsertAfter(this->head, this->tail, item);
     }
+    this.length++;
 }
 
 template <typename T>
 T Queue<T>::pop() {
     if (this->head == NULL)
         assert("queue is empty" == "");
+    this.length--;
     return DeleteNode(this->head, this->head);
 }
 
@@ -120,6 +126,11 @@ typename Queue<T>::Iterator Queue<T>::end() const {
 template <typename T>
 bool Queue<T>::empty() const{
     return this->head == NULL;
+}
+
+template <typename T>
+int Queue<T>::size() const {
+    return this->length;
 }
 
 template <typename U>
