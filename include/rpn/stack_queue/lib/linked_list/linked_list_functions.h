@@ -1,6 +1,5 @@
 #pragma once
 #include "Node.h"
-#include <cassert>
 #include <iostream>
 
 // prints the list
@@ -95,7 +94,7 @@ Node<T>* InsertBefore(Node<T>*& head, Node<T>* before, const T& item) {
 template <typename T>
 Node<T>* PreviousNode(Node<T>* head, Node<T>* previous) {
     if (head == NULL)
-        assert("head node is null somehow" == "");
+        throw "head node is null somehow";
     if (head == previous)
         return NULL;
     if (head->next == previous)
@@ -107,7 +106,7 @@ Node<T>* PreviousNode(Node<T>* head, Node<T>* previous) {
 template <typename T>
 T DeleteNode(Node<T>*& head, Node<T>* deleteThis) {
     if (head == NULL)
-        assert("tried to delete non existant node or empty list" == "");
+        throw "tried to delete non existant node or empty list";
     Node<T>* previous = PreviousNode(head, deleteThis);
     T temp = deleteThis->data;
     if (previous == NULL)
@@ -137,7 +136,7 @@ void ClearList(Node<T>*& head) {
 template <typename T>
 T& At(Node<T>* head, int pos) {
     if (head == NULL)
-        assert("index out of bounds" == "");
+        throw "index out of bounds";
     if (pos == 0)
         return head->data;
     else

@@ -1,5 +1,4 @@
 #include "rpn/Operator.h"
-#include <cassert>
 #include <iostream>
 
 Operator::Operator() : _symbol('+') {}
@@ -18,7 +17,7 @@ double Operator::operate(double a, double b) {
         case '^':
             return pow(a, b);
         default:
-            assert("unsupported operation" == "");
+            throw "unsupported operation: " + this->_symbol;
     }
     return -1;
 }

@@ -101,14 +101,14 @@ void Queue<T>::push(const T& item) {
     else {
         this->tail = InsertAfter(this->head, this->tail, item);
     }
-    this.length++;
+    this->length++;
 }
 
 template <typename T>
 T Queue<T>::pop() {
     if (this->head == NULL)
-        assert("queue is empty" == "");
-    this.length--;
+        throw "queue is empty";
+    this->length--;
     return DeleteNode(this->head, this->head);
 }
 
