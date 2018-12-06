@@ -113,3 +113,66 @@ int find_mismatched_parenthesis(std::string equation) {
     }
     return left - right;
 }
+
+// takes an infix expression and tokenizes it into a queue
+// supports turning 2x into 2 * x
+// does not assume input checking
+Queue<Token*> tokenize(std::string equation) {
+    Queue<Token*> tokenized;
+
+    // load equation into queue, skip whitespace
+    Queue<char> token_chars;
+    for (int i = 0; i < equation.size(); i++) {
+
+        if (equation.at(i) != ' ')
+            token_chars.push(equation.at(i));
+    }
+
+    Token* last_token = NULL;
+    while (!token_chars.empty()) {
+        // get 1st character
+        std::string token = "";
+        token += token_chars.pop();
+
+        // tokenize digits;
+        if (isdigit(token.at(0))) {
+            // check if the top of the queue is a . or a number
+            while (!token_chars.empty() && (isdigit(*token_chars.begin()) ||
+                                            *token_chars.begin() == '.')) {
+                token += token_chars.pop();
+            }
+            Token* operand = new Operand(atof(token.c_str()));
+            tokenized.push(operand);
+            last_token = operand;
+        }
+        // tokenize something that can either be a function or a variable
+        else if (isalpha(token.at(0))) {
+            // this was probably a case like 5x, add a multiplication token
+            if (last_token->TypeOf() == NUMBER) {
+                last_token = new Operator('*');
+                tokenized.push(last_token);
+            }
+            Token* function_or_variable = NULL;
+            // decide if we're working with a variable or a function here
+            if (!isalpha(*token_chars.begin())) {
+                // it's variable
+                function_or_variable = new Variable(token.at(0));
+            }
+            // it's a function
+            else {
+                while (!token_chars.empty() && isalpha(*token_chars.begin())) {
+                    token += token_chars.pop();
+                }
+                function_or_variable = new FunctionToken(token);
+            }
+            tokenized.push(function_or_variable);
+            last_token = function_or_variable;
+        }
+        // if it's not a letter or a number it's probably a symbol
+        else {
+            last_token = new Operator(token.at(0));
+            tokenized.push(last_token);
+        }
+    }
+    return tokenized;
+}

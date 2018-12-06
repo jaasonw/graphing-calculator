@@ -1,55 +1,41 @@
 #include "include/rpn/rpn.h"
-#include "rpn/stack_queue/queue.h"
+#include "include/rpn/stack_queue/queue.h"
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <cassert>
 
 using namespace std;
-int main() {
-    assert("asdf");
+
+int main(int argc, char const* argv[]) {
+    // init
+    Queue<Token*> infix = Queue<Token*>();
+
+    cout << "enter an infix expression: ";
     string input;
-    cout << "enter an equation: ";
-    Queue<Token*> infix;
-    infix.push(new Operator('('));
-    infix.push(new Operator('('));
-    infix.push(new Operator('('));
-    infix.push(new Operand(1));
-    infix.push(new Operator('+'));
-    infix.push(new Operand(2));
-    infix.push(new Operator(')'));
-    infix.push(new Operator('^'));
-    infix.push(new Operand(2));
-    infix.push(new Operator('*'));
-    infix.push(new Operand(3));
-    infix.push(new Operator(')'));
-    infix.push(new Operator('-'));
-    infix.push(new Operand(4));
-    infix.push(new Operator('*'));
-    infix.push(new Operand(5));
-    infix.push(new Operator(')'));
-    infix.push(new Operator('/'));
-    infix.push(new Operand(6));
-    infix.push(new Operator('+'));
-    infix.push(new FunctionToken("sqrt"));
-    infix.push(new Operator('('));
-    infix.push(new Operand(7));
-    infix.push(new Operator('+'));
-    infix.push(new Operand(8));
-    infix.push(new Operator(')'));
-    
+    getline(cin, input);
+
+    infix = tokenize(input);
+
+    // print infix expression
     cout << "infix: ";
     for (auto it = infix.begin(); it != NULL; it++) {
         cout << **it << " ";
     }
     cout << endl;
+
+    // print postfix expression
     cout << "postfix: ";
-    auto postfix = infix_to_postfix(infix);
+    Queue<Token*> postfix = infix_to_postfix(infix);
     for (auto it = postfix.begin(); it != NULL; it++) {
         cout << **it << " ";
     }
+    // eval
+    double result = eval(postfix);
+
     cout << endl;
-    cout << "result: ";
-    cout << eval(postfix);
+    cout << result << endl;
+
+    cout << endl;
+    system("pause");
     return 0;
 }
