@@ -148,7 +148,7 @@ Queue<Token*> tokenize(std::string equation) {
         // tokenize something that can either be a function or a variable
         else if (isalpha(token.at(0))) {
             // this was probably a case like 5x, add a multiplication token
-            if (last_token->TypeOf() == NUMBER) {
+            if (last_token != NULL && last_token->TypeOf() == NUMBER) {
                 last_token = new Operator('*');
                 tokenized.push(last_token);
             }
