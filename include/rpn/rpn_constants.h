@@ -1,5 +1,6 @@
 #pragma once
 // type constants
+const int GENERIC = -1;
 const int NUMBER = 0;
 const int OPERATOR = 1;
 const int VARIABLE = 2;
