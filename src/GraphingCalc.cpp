@@ -4,3 +4,10 @@ GraphingCalc::GraphingCalc() {
     new Graph();
     engine.run();
 }
+
+
+
+
+
+
+
