@@ -4,14 +4,12 @@ double eval(Queue<Token*> tokens, double variable) {
     Stack<Token*> call_stack = Stack<Token*>();
     while (!tokens.empty()) {
         Token* current_token = tokens.pop();
-        switch (current_token->TypeOf()) {
+        switch(current_token->TypeOf()) {
             case OPERATOR: {
-                Operator* operator_token =
-                    static_cast<Operator*>(current_token);
+                Operator* operator_token = static_cast<Operator*>(current_token);
                 Operand* right = static_cast<Operand*>(call_stack.pop());
                 Operand* left = static_cast<Operand*>(call_stack.pop());
-                call_stack.push(new Operand(operator_token->operate(
-                    left->get_number(), right->get_number())));
+                call_stack.push(new Operand(operator_token->operate(left->get_number(), right->get_number())));
                 delete left;
                 delete right;
                 delete current_token;
@@ -27,11 +25,9 @@ double eval(Queue<Token*> tokens, double variable) {
                 delete current_token;
                 break;
             case FUNCTION:
-                FunctionToken* function_token =
-                    static_cast<FunctionToken*>(current_token);
+                FunctionToken* function_token = static_cast<FunctionToken*>(current_token);
                 Operand* num = static_cast<Operand*>(call_stack.pop());
-                call_stack.push(
-                    new Operand(function_token->operate(num->get_number())));
+                call_stack.push(new Operand(function_token->operate(num->get_number())));
                 delete num;
                 break;
         }
@@ -52,53 +48,53 @@ double eval(Queue<Token*> tokens, double variable) {
 }
 
 Queue<Token*> infix_to_postfix(Queue<Token*> infix) {
-    Queue<Token*> output_queue;
-    Stack<Token*> operator_stack;
+    Queue<Token*> tokens;
+    Stack<Token*> operators;
     while (!infix.empty()) {
         Token* token = infix.pop();
         if (token->TypeOf() == NUMBER) {
-            output_queue.push(token);
-        } else if (token->TypeOf() == FUNCTION) {
-            operator_stack.push(token);
-        } else if (token->TypeOf() == OPERATOR) {
+            tokens.push(token);
+        }
+        else if (token->TypeOf() == FUNCTION) {
+            operators.push(token);
+        }
+        else if (token->TypeOf() == OPERATOR) {
             Operator* op = static_cast<Operator*>(token);
-            if (op->symbol() != '(' && !operator_stack.empty()) {
-                operator_stack.empty();
-                while (!operator_stack.empty() &&
-                       (*operator_stack.begin())->TypeOf() == FUNCTION) {
-                    auto a = (*operator_stack.begin());
-                    std::cout << a << std::endl;
-                    output_queue.push(operator_stack.pop());
+            if (op->precedence() == -1) // precedence is irrelevant (ex: parenthesis), just push
+                operators.push(op);
+            else if (!operators.empty()) {
+                if (static_cast<Operator*>(*operators.begin())->precedence() > op->precedence()) {
+                    tokens.push(operators.pop());
+                    operators.push(op);
                 }
-                if ((*operator_stack.begin())->TypeOf() == OPERATOR) {
-                    while (static_cast<Operator*>(*operator_stack.begin())
-                               ->precedence() >= op->precedence()) {
-                        output_queue.push(operator_stack.pop());
-                    }
+                else {
+                    operators.push(op);
                 }
-            } else if (op->symbol() == '(') {
-                operator_stack.push(op);
-            } else if (op->symbol() == ')') {
-                while (
-                    static_cast<Operator*>(*operator_stack.begin())->symbol() !=
-                    '(') {
-                    output_queue.push(operator_stack.pop());
+            }
+            else {
+                operators.push(op);
+            }
+            // delete op;
+            
+            // handle parenthesis
+            if (static_cast<Operator*>(*operators.begin())->symbol() == ')') {
+                // delete )
+                delete operators.pop();
+                while (static_cast<Operator*>(*operators.begin())->symbol() != '(') {
+                    tokens.push(operators.pop());
                 }
                 // discard the opening (
-                delete operator_stack.pop();
-            } else {
-                operator_stack.push(op);
+                delete operators.pop();
             }
-            delete op;
         }
         // delete token;
     }
-    while (!operator_stack.empty()) {
-        auto op = static_cast<Operator*>(operator_stack.pop());
+    while (!operators.empty()) {
+        auto op = static_cast<Operator*>(operators.pop());
         if (op->symbol() != '(' && op->symbol() != ')')
-            output_queue.push(op);
+            tokens.push(op);
     }
-    return output_queue;
+    return tokens;
 }
 
 // takes an equation string and counts the number of mismatched parenthesis
@@ -152,7 +148,7 @@ Queue<Token*> tokenize(std::string equation) {
         // tokenize something that can either be a function or a variable
         else if (isalpha(token.at(0))) {
             // this was probably a case like 5x, add a multiplication token
-            if (last_token != NULL && last_token->TypeOf() == NUMBER) {
+            if (last_token->TypeOf() == NUMBER) {
                 last_token = new Operator('*');
                 tokenized.push(last_token);
             }

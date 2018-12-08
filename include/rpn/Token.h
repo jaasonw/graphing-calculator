@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-#include "rpn_constants.h"
 
 class Token
 {
