@@ -16,7 +16,7 @@ sources.append("src/rpn")
 
 link = []
 
-flags = "-std=c++11 -Ofast -Wall -Wextra -Wfatal-errors -g"
+flags = "-std=c++11 -Wall -Wextra -Wfatal-errors -g"
 
 compiler = "g++"
 
