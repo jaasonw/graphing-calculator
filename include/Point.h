@@ -1,6 +1,6 @@
 #pragma once
-#include "engine/Entity.h"
 #include "constants.h"
+#include "engine/Entity.h"
 
 class Point : public Entity {
 private:
@@ -19,7 +19,7 @@ public:
 
     void plot(double screen_x, double screen_y);
     void setColor(sf::Color color) { this->color = color; }
-    
+
     double get_graph_x() { return graph_x; }
     double get_graph_y() { return graph_y; }
 

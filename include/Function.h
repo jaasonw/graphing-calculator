@@ -22,6 +22,7 @@ private:
 
     Queue<Token*> postfix;
     std::vector<Point*> points;
+
 public:
     Function();
     ~Function();

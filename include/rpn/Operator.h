@@ -4,8 +4,7 @@
 #include <cmath>
 #include <iostream>
 
-class Operator : public Token
-{
+class Operator : public Token {
 private:
     char _symbol;
 
