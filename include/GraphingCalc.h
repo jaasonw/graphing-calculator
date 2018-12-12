@@ -4,6 +4,7 @@
 class GraphingCalc {
 private:
     Engine engine;
+
 public:
     GraphingCalc();
 };

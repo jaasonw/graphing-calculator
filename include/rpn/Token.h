@@ -1,9 +1,8 @@
 #pragma once
-#include <iostream>
 #include "rpn_constants.h"
+#include <iostream>
 
-class Token
-{
+class Token {
 private:
 public:
     friend std::ostream& operator<<(std::ostream& out, const Token& t);
