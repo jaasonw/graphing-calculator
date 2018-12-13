@@ -20,56 +20,58 @@ Graph::Graph() : Entity() {
     this->y_axis.setFillColor(AXIS_COLOR);
 
     // functions
-    this->plot_expression("5x");
-    this->plot_expression("3x + 2");
-    this->plot_expression("1/x");
-    this->plot_expression("tan(x)");
+    // this->plot_expression("5x");
+    // this->plot_expression("3x + 2");
+    // this->plot_expression("1/x");
+    // this->plot_expression("tan(x)");
 }
 
 void Graph::step(sf::RenderWindow& window, sf::Event& event, bool poll) {
     // event handling stuff
-    // mouse wheel zooming
-    // if (event.type == sf::Event::MouseWheelScrolled) {
-    //     if (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel) {
-    //         this->zoom += ZOOM_INCREMENT * (event.mouseWheelScroll.delta / 10);
-    //     }
-    // }
-    if (event.type == sf::Event::KeyPressed && !this->equation_input.is_active()) {
-        // zooming
-        if (event.key.code == sf::Keyboard::RBracket) {
-            this->zoom += ZOOM_INCREMENT;
+    if (poll) {
+        // mouse wheel zooming
+        if (event.type == sf::Event::MouseWheelScrolled) {
+            if (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel) {
+                this->zoom += ZOOM_INCREMENT * (event.mouseWheelScroll.delta / 10);
+            }
         }
-        else if (event.key.code == sf::Keyboard::LBracket) {
-            if (zoom > 10)
-                this->zoom -= ZOOM_INCREMENT;
-        }
+        if (event.type == sf::Event::KeyPressed && !this->equation_input.is_active()) {
+            // zooming
+            if (event.key.code == sf::Keyboard::RBracket) {
+                this->zoom += ZOOM_INCREMENT;
+            }
+            else if (event.key.code == sf::Keyboard::LBracket) {
+                if (zoom > 10)
+                    this->zoom -= ZOOM_INCREMENT;
+            }
+            
+            // panning
+            if (event.key.code == sf::Keyboard::Left) {
+                this->set_x(this->get_x() - PAN_INCREMENT);
+            }
+            else if (event.key.code == sf::Keyboard::Right) {
+                this->set_x(this->get_x() + PAN_INCREMENT);
+            }
+            else if (event.key.code == sf::Keyboard::Up) {
+                this->set_y(this->get_y() - PAN_INCREMENT);
+            }
+            else if (event.key.code == sf::Keyboard::Down) {
+                this->set_y(this->get_y() + PAN_INCREMENT);
+            }
 
-
-        // panning
-        if (event.key.code == sf::Keyboard::Left) {
-            this->set_x(this->get_x() - PAN_INCREMENT);
-        }
-        else if (event.key.code == sf::Keyboard::Right) {
-            this->set_x(this->get_x() + PAN_INCREMENT);
-        }
-        else if (event.key.code == sf::Keyboard::Up) {
-            this->set_y(this->get_y() - PAN_INCREMENT);
-        }
-        else if (event.key.code == sf::Keyboard::Down) {
-            this->set_y(this->get_y() + PAN_INCREMENT);
-        }
-
-        // reset view
-        if (event.key.code == sf::Keyboard::R) {
-            this->set_x(SCREEN_WIDTH / 2);
-            this->set_y(SCREEN_HEIGHT / 2);
-            this->zoom = GRAPH_DEFAULT_ZOOM;
+            // reset view
+            if (event.key.code == sf::Keyboard::R) {
+                this->set_x(SCREEN_WIDTH / 2);
+                this->set_y(SCREEN_HEIGHT / 2);
+                this->zoom = GRAPH_DEFAULT_ZOOM;
+            }
         }
     }
 
-    // if (equation_input.peek_input() != "") {
-    //     this->plot_expression(equation_input.get_input());
-    // }
+    if (equation_input.peek_input() != "") {
+        auto eq = equation_input.get_input();
+        this->plot_expression(eq);
+    }
 }
 
 void Graph::plot_expression(std::string expression, double low, double high) {

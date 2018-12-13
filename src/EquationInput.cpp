@@ -11,22 +11,24 @@ EquationInput::EquationInput() : Entity() {
 EquationInput::~EquationInput() {}
 
 void EquationInput::step(sf::RenderWindow& window, sf::Event& event, bool poll) {
-    // TODO CLEAN UP THIS REALLY BAD EVENT HANDLING HACK CUS I GOOF'D
-    if (event.type == sf::Event::KeyPressed) {
-        // std::cout << "enter pressed" << std::endl;
-        if (event.key.code == sf::Keyboard::Enter) {
-            if (!this->active) {
-                current_input = "";
+    if (poll) {
+        if (event.type == sf::Event::KeyPressed) {
+            // std::cout << "enter pressed" << std::endl;
+            if (event.key.code == sf::Keyboard::Enter) {
+                if (!this->active) {
+                    current_input = "";
+                }
+                else {
+                    if (temp_input.at(0) == '\r')
+                        current_input = temp_input.substr(1);
+                    else
+                        current_input = temp_input;
+                    temp_input = "";
+                }
+                this->active = !this->active;
+                this->set_visible(this->active);
             }
-            else {
-                current_input = temp_input;
-                temp_input = "";
-            }
-            this->active = !this->active;
-            this->set_visible(this->active);
         }
-    }
-    if (window.pollEvent(event)) {
         if (event.type == sf::Event::TextEntered) {
             if (this->active) {
                 if (event.text.unicode == '\b' && this->temp_input.size() > 0)
