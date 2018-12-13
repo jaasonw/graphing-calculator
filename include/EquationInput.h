@@ -11,11 +11,11 @@ private:
     double height = 30;
     double x = 0;
     double y = SCREEN_HEIGHT - height;
-    bool active = true;
+    bool active = false;
     std::string current_input = "";
     std::string temp_input = "";
     sf::RectangleShape textbox;
-    sf::Color color = sf::Color::Red;
+    sf::Color color = sf::Color::Black;
     sf::Font font;
 public:
     EquationInput();

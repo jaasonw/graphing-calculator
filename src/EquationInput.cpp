@@ -51,10 +51,18 @@ std::string EquationInput::get_input() {
 
 void EquationInput::render_after(sf::RenderWindow& window) {
     sf::Text input;
+    sf::Text fx;
+    fx.setFont(this->font);
+    fx.setCharacterSize(20);
+    fx.setString("f(x): ");
+    fx.setPosition(x, y + this->height - 25);
+
     input.setFont(this->font);
     input.setCharacterSize(20);
     input.setString(temp_input);
-    input.setPosition(x, y + this->height - 25);
+    input.setPosition(60 + x, y + this->height - 25);
+
+    window.draw(fx);
     window.draw(input);
     window.draw(this->textbox);
 }
