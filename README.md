@@ -1,3 +1,7 @@
-# cs-final
+# graphing-calculator
 
-I have this here to have some version control on my final basically. Written with SFML 2.5.1, use build.py to build, tough luck if not using g++
+![graph](https://i.imgur.com/kxChPOA.png)
+
+Graphing calculator written using SFML 2.5.1 for my object oriented C++ final. Implements the shunting yard algorithm, a reverse polish notation evaluator, and an input tokenizer that accepts an equation as a string and tokenizes it for shunting yard
+
+Modify build_example.py with the SFML include path to build with g++, might also work with clang if you tweak the script a bit
