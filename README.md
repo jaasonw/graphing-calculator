@@ -1,6 +1,6 @@
 # graphing-calculator
 
-![graph](https://i.imgur.com/25dzcma.png)
+![graph](https://i.imgur.com/aCwLTyc.png)
 
 Graphing calculator written using SFML 2.5.1 for my object oriented C++ final. Implements the shunting yard algorithm, a reverse polish notation evaluator, and an input tokenizer that accepts an equation as a string and tokenizes it for shunting yard
 
