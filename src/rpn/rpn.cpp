@@ -10,9 +10,9 @@ double eval(Queue<Token*> tokens, double variable) {
                 Operand* right = static_cast<Operand*>(call_stack.pop());
                 Operand* left = static_cast<Operand*>(call_stack.pop());
                 call_stack.push(new Operand(operator_token->operate(left->get_number(), right->get_number())));
-                delete left;
-                delete right;
-                delete current_token;
+                // delete left;
+                // delete right;
+                // delete current_token;
                 break;
             }
             case NUMBER:
@@ -22,13 +22,13 @@ double eval(Queue<Token*> tokens, double variable) {
                 // push in operand to take the place of the variable
                 call_stack.push(new Operand(variable));
                 // make sure to delete the variable token
-                delete current_token;
+                // delete current_token;
                 break;
             case FUNCTION:
                 FunctionToken* function_token = static_cast<FunctionToken*>(current_token);
                 Operand* num = static_cast<Operand*>(call_stack.pop());
                 call_stack.push(new Operand(function_token->operate(num->get_number())));
-                delete num;
+                // delete num;
                 break;
         }
     }
@@ -39,10 +39,10 @@ double eval(Queue<Token*> tokens, double variable) {
     // clean up the rest of the queue & stack if for some reason they're not
     // empty
     while (!tokens.empty()) {
-        delete tokens.pop();
+        // delete tokens.pop();
     }
     while (!call_stack.empty()) {
-        delete call_stack.pop();
+        // delete call_stack.pop();
     }
     return result_number;
 }
@@ -54,6 +54,9 @@ Queue<Token*> infix_to_postfix(Queue<Token*> infix) {
         Token* token = infix.pop();
         switch (token->TypeOf()) {
             case NUMBER:
+                output_queue.push(token);
+                break;
+            case VARIABLE:
                 output_queue.push(token);
                 break;
             case FUNCTION:
@@ -91,8 +94,6 @@ Queue<Token*> infix_to_postfix(Queue<Token*> infix) {
                     if (top->TypeOf() == FUNCTION)
                         output_queue.push(operator_stack.pop());
                 }
-                break;
-            default:
                 break;
         }
     }
@@ -163,7 +164,7 @@ Queue<Token*> tokenize(std::string equation) {
             }
             Token* function_or_variable = NULL;
             // decide if we're working with a variable or a function here
-            if (!isalpha(*token_chars.begin())) {
+            if (token_chars.empty() || !isalpha(*token_chars.begin())) {
                 // it's variable
                 function_or_variable = new Variable(token.at(0));
             }
