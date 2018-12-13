@@ -63,7 +63,7 @@ void Function::update_graph() {
             points.push_back(new Point(i, eval(postfix, i), color));
         }
         catch(...) {
-            std::cout << "asymtote i assume?" << std::endl;
+            std::cout << "something went wrong here, maybe an asymtote, maybe an invalid expression" << std::endl;
         }
     }
 }
