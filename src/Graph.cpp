@@ -46,7 +46,8 @@ void Graph::step(sf::RenderWindow& window, sf::Event& event, bool poll) {
         // mouse wheel zooming
         if (event.type == sf::Event::MouseWheelScrolled) {
             if (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel) {
-                this->zoom += ZOOM_INCREMENT * (event.mouseWheelScroll.delta / 10);
+                if (this->zoom + ZOOM_INCREMENT * (event.mouseWheelScroll.delta / 10) > 10)
+                    this->zoom += ZOOM_INCREMENT * (event.mouseWheelScroll.delta / 10);
             }
         }
         if (event.type == sf::Event::KeyPressed && !this->equation_input.is_active()) {
