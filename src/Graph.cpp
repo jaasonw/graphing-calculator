@@ -126,13 +126,13 @@ void Graph::render_after(sf::RenderWindow& window) {
     // draw controls text
     sf::Text controls;
     controls.setFont(this->SourceCodePro);
-    controls.setCharacterSize(15);
+    controls.setCharacterSize(20);
     controls.setString("Arrow keys: pan\n]: Zoom in\n[: Zoom out\nR: Reset view");
     window.draw(controls);
 
     // draw functions list
     for (int i = 0; i < this->function_history.size(); i++) {
         this->function_history.at(i)->set_x(SCREEN_WIDTH - 180);
-        this->function_history.at(i)->set_y(15 + (i * 30));
+        this->function_history.at(i)->set_y((i * 25));
     }
 }
