@@ -68,6 +68,7 @@ Queue<T>& Queue<T>::operator=(const Queue& other) {
     this->head = CopyList(other.head);
     Node<T>* null = NULL;
     this->tail = PreviousNode(this->head, null);
+    this->length = other.length;
     return *this;
 }
 
