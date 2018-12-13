@@ -11,13 +11,14 @@ void Engine::run() {
     sf::Clock clock;
     while (window.isOpen()) {
         sf::Event event;
-        if (window.pollEvent(event)) {
+        bool poll = window.pollEvent(event);
+        if (poll) {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
         // step loop
         for (unsigned int i = 0; i < entities.size(); i++) {
-            entities.at(i)->step(window, event);
+            entities.at(i)->step(window, event, poll);
         }
         window.clear();
         // render loop

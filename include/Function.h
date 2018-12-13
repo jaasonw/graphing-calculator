@@ -31,7 +31,7 @@ public:
     Function();
     Function(std::string function_string);
     ~Function();
-    void step(sf::RenderWindow& window, const sf::Event& event);
+    void step(sf::RenderWindow& window, sf::Event& event, bool poll);
     void render(sf::RenderWindow& window);
 
     // pass in the screen coordinates of the graph origin

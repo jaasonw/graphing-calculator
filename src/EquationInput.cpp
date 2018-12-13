@@ -10,7 +10,7 @@ EquationInput::EquationInput() : Entity() {
 }
 EquationInput::~EquationInput() {}
 
-void EquationInput::step(sf::RenderWindow& window, sf::Event& event) {
+void EquationInput::step(sf::RenderWindow& window, sf::Event& event, bool poll) {
     // TODO CLEAN UP THIS REALLY BAD EVENT HANDLING HACK CUS I GOOF'D
     if (event.type == sf::Event::KeyPressed) {
         // std::cout << "enter pressed" << std::endl;

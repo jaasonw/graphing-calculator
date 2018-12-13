@@ -12,8 +12,7 @@ public:
     virtual ~Entity();
     
     // runs every frame
-    virtual void step(sf::RenderWindow& window, const sf::Event& event);
-    virtual void step(sf::RenderWindow& window, sf::Event& event);
+    virtual void step(sf::RenderWindow& window, sf::Event& event, bool poll);
 
     // runs every frame, reserved for drawing
     virtual void render(sf::RenderWindow& window);

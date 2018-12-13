@@ -14,7 +14,7 @@ public:
     Point();
     Point(double graph_x, double graph_y, sf::Color color);
     ~Point();
-    void step(sf::RenderWindow& window, const sf::Event& event);
+    void step(sf::RenderWindow& window, sf::Event& event, bool poll);
     void render(sf::RenderWindow& window);
 
     void plot(double screen_x, double screen_y);

@@ -31,7 +31,7 @@ private:
 
 public:
     Graph();
-    void step(sf::RenderWindow& window, const sf::Event& event);
+    void step(sf::RenderWindow& window, sf::Event& event, bool poll);
     void plot_expression(std::string expression, double low = -50, double high = 50);
     void render(sf::RenderWindow& window);
     void render_after(sf::RenderWindow& window);

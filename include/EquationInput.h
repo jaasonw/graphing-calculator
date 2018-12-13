@@ -24,6 +24,6 @@ public:
     std::string peek_input() { return this->current_input; };
     bool is_active() { return this->active; }
     void set_font(sf::Font& font) { this->font = font; }
-    void step(sf::RenderWindow& window, sf::Event& event);
+    void step(sf::RenderWindow& window, sf::Event& event, bool poll);
     void render_after(sf::RenderWindow& window);
 };

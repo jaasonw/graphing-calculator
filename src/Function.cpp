@@ -27,7 +27,7 @@ Function::~Function() {
         delete point;
     }
 }
-void Function::step(sf::RenderWindow& window, const sf::Event& event) {
+void Function::step(sf::RenderWindow& window, sf::Event& event, bool poll) {
     // TODO: maybe change this so it plots a point every frame instead
     // of the constructor
 }

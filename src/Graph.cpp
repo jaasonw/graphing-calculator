@@ -26,7 +26,7 @@ Graph::Graph() : Entity() {
     this->plot_expression("tan(x)");
 }
 
-void Graph::step(sf::RenderWindow& window, const sf::Event& event) {
+void Graph::step(sf::RenderWindow& window, sf::Event& event, bool poll) {
     // event handling stuff
     // mouse wheel zooming
     // if (event.type == sf::Event::MouseWheelScrolled) {
