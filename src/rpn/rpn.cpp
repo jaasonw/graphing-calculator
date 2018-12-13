@@ -48,53 +48,62 @@ double eval(Queue<Token*> tokens, double variable) {
 }
 
 Queue<Token*> infix_to_postfix(Queue<Token*> infix) {
-    Queue<Token*> tokens;
-    Stack<Token*> operators;
+    Queue<Token*> output_queue;
+    Stack<Token*> operator_stack;
     while (!infix.empty()) {
         Token* token = infix.pop();
-        if (token->TypeOf() == NUMBER) {
-            tokens.push(token);
-        }
-        else if (token->TypeOf() == FUNCTION) {
-            operators.push(token);
-        }
-        else if (token->TypeOf() == OPERATOR) {
-            Operator* op = static_cast<Operator*>(token);
-            if (op->precedence() == -1) // precedence is irrelevant (ex: parenthesis), just push
-                operators.push(op);
-            else if (!operators.empty()) {
-                if (static_cast<Operator*>(*operators.begin())->precedence() > op->precedence()) {
-                    tokens.push(operators.pop());
-                    operators.push(op);
+        switch (token->TypeOf()) {
+            case NUMBER:
+                output_queue.push(token);
+                break;
+            case FUNCTION:
+                operator_stack.push(token);
+                break;
+            case OPERATOR:
+                Operator* op = static_cast<Operator*>(token);
+                if (op->precedence() == -1)
+                    operator_stack.push(op);
+                else if (!operator_stack.empty()) {
+                    Token* top = *(operator_stack.begin());
+                    while (!operator_stack.empty() && top->TypeOf() == OPERATOR && static_cast<Operator*>(top)->precedence() > op->precedence()) {
+                        // ignore parenthesis
+                        if (static_cast<Operator*>(top)->precedence() == -1)
+                            break;
+                        output_queue.push(operator_stack.pop());
+                        if (!operator_stack.empty())
+                            top = *(operator_stack.begin());
+                    }
+                    operator_stack.push(op);
                 }
                 else {
-                    operators.push(op);
+                    operator_stack.push(op);
                 }
-            }
-            else {
-                operators.push(op);
-            }
-            // delete op;
-            
-            // handle parenthesis
-            if (static_cast<Operator*>(*operators.begin())->symbol() == ')') {
-                // delete )
-                delete operators.pop();
-                while (static_cast<Operator*>(*operators.begin())->symbol() != '(') {
-                    tokens.push(operators.pop());
+
+                if (op->symbol() == ')') {
+                    delete operator_stack.pop();
+                    Token* top = *(operator_stack.begin());
+                    while (!operator_stack.empty() && top->TypeOf() == OPERATOR && static_cast<Operator*>(top)->symbol() != '(') {
+                        output_queue.push(operator_stack.pop());
+                        top = *(operator_stack.begin());
+                    }
+                    delete operator_stack.pop();
+                    top = *(operator_stack.begin());
+                    if (top->TypeOf() == FUNCTION)
+                        output_queue.push(operator_stack.pop());
                 }
-                // discard the opening (
-                delete operators.pop();
-            }
+                break;
+            default:
+                break;
         }
-        // delete token;
     }
-    while (!operators.empty()) {
-        auto op = static_cast<Operator*>(operators.pop());
+    while (!operator_stack.empty()) {
+        auto op = static_cast<Operator*>(operator_stack.pop());
         if (op->symbol() != '(' && op->symbol() != ')')
-            tokens.push(op);
+            output_queue.push(op);
+        else
+            delete op;
     }
-    return tokens;
+    return output_queue;
 }
 
 // takes an equation string and counts the number of mismatched parenthesis

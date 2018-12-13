@@ -8,7 +8,7 @@ const int FUNCTION = 3;
 
 // precedence constants
 const int SUBTRACTION = 0;
-const int ADDITION = 0;
-const int DIVISION = 1;
-const int MULTIPLICATION = 1;
-const int EXPONENT = 2;
+const int ADDITION = 1;
+const int DIVISION = 2;
+const int MULTIPLICATION = 3;
+const int EXPONENT = 10;
