@@ -1,3 +1,4 @@
+
 # trash ass build script xd
 import os
 import time
@@ -11,7 +12,7 @@ includes = []
 includes.append("include")
 includes.append("include/rpn")
 includes.append("include/engine")
-includes.append("[sfml include path]")
+includes.append("[SFML INCLUDE PATH]")
 
 sources = []
 sources.append("src")
@@ -19,15 +20,30 @@ sources.append("src/rpn")
 sources.append("src/engine")
 
 link = []
-link.append("sfml-audio")
-link.append("sfml-graphics")
-link.append("sfml-network")
-link.append("sfml-system")
-link.append("sfml-window")
+link.append("sfml-audio-d")
+link.append("sfml-graphics-d")
+link.append("sfml-network-d")
+link.append("sfml-system-d")
+link.append("sfml-window-d")
 
-flags = "-std=c++11 -Ofast -Wall -Wextra -Wfatal-errors -g"
 
 compiler = "g++"
+
+
+flags = []
+flags.append("-std=c++11")
+flags.append("-Wall")
+flags.append("-Wextra")
+flags.append("-g")
+
+if compiler == "clang++":
+    flags.append("-std=c++17")
+    flags.append("-Xclang -flto-visibility-public-std")
+
+flag_str = ""
+
+for f in flags:
+    flag_str += f + " "
 
 output = "a.exe"
 
@@ -45,9 +61,8 @@ link_str = ""
 for l in link:
     sources_str += f"-l{l} "
 
-cmd = f"{compiler} {flags} {include_str} -o {output} main.cpp {sources_str}"
+cmd = f"{compiler} {flag_str} {include_str} -o {output} main.cpp {sources_str}"
 print(cmd)
-os.system(cmd)
 t1 = time.time()
 os.system(cmd)
 t2 = time.time()

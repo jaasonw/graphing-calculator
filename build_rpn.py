@@ -16,9 +16,22 @@ sources.append("src/rpn")
 
 link = []
 
-flags = "-std=c++11 -Wall -Wextra -Wfatal-errors -g"
-
 compiler = "g++"
+
+
+flags = []
+flags.append("-std=c++11")
+flags.append("-Wall")
+flags.append("-Wextra")
+flags.append("-g")
+# flag_str = "-std=c++14 -Wall -Wextra -Wfatal-errors -g"
+if compiler == "clang++":
+    flags.append("-std=c++17")
+    flags.append("-Xclang -flto-visibility-public-std")
+
+flag_str = ""
+for f in flags:
+    flag_str += f + " "
 
 output = "test_rpn.exe"
 
@@ -36,7 +49,7 @@ link_str = ""
 for l in link:
     sources_str += f"-l{l} "
 
-cmd = f"{compiler} {flags} {include_str} -o {output} test_rpn.cpp {sources_str}"
+cmd = f"{compiler} {flag_str} {include_str} -o {output} test_rpn.cpp {sources_str}"
 print(cmd)
 os.system(cmd)
 t1 = time.time()
