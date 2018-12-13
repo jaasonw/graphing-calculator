@@ -6,7 +6,8 @@ int Token::TypeOf() const {
 }
 
 std::ostream& Token::print(std::ostream& out) const {
-    out << "";
+    out << "[GENERIC TOKEN]";
+    return out;
 }
 
 std::ostream &operator<<(std::ostream &out, const Token &t) {
