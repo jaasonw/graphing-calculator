@@ -13,14 +13,16 @@ EquationInput::~EquationInput() {}
 void EquationInput::step(sf::RenderWindow& window, sf::Event& event, bool poll) {
     if (poll) {
         if (event.type == sf::Event::KeyPressed) {
-            // std::cout << "enter pressed" << std::endl;
             if (event.key.code == sf::Keyboard::Enter) {
                 if (!this->active) {
                     current_input = "";
                 }
                 else {
-                    if (temp_input.at(0) == '\r')
+                    if (temp_input.length() == 0)
+                        current_input = "";
+                    else if (temp_input.at(0) == '\r') {
                         current_input = temp_input.substr(1);
+                    }
                     else
                         current_input = temp_input;
                     temp_input = "";
