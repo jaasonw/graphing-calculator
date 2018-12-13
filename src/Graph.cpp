@@ -47,16 +47,16 @@ void Graph::step(sf::RenderWindow& window, sf::Event& event, bool poll) {
 
             // panning
             if (event.key.code == sf::Keyboard::Left) {
-                this->set_x(this->get_x() - PAN_INCREMENT);
-            }
-            else if (event.key.code == sf::Keyboard::Right) {
                 this->set_x(this->get_x() + PAN_INCREMENT);
             }
+            else if (event.key.code == sf::Keyboard::Right) {
+                this->set_x(this->get_x() - PAN_INCREMENT);
+            }
             else if (event.key.code == sf::Keyboard::Up) {
-                this->set_y(this->get_y() - PAN_INCREMENT);
+                this->set_y(this->get_y() + PAN_INCREMENT);
             }
             else if (event.key.code == sf::Keyboard::Down) {
-                this->set_y(this->get_y() + PAN_INCREMENT);
+                this->set_y(this->get_y() - PAN_INCREMENT);
             }
 
             // reset view
