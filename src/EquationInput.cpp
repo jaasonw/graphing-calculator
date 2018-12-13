@@ -54,7 +54,7 @@ void EquationInput::render_after(sf::RenderWindow& window) {
     input.setFont(this->font);
     input.setCharacterSize(20);
     input.setString(temp_input);
-    input.setPosition(x, y + this->height / 2);
+    input.setPosition(x, y + this->height - 25);
     window.draw(input);
     window.draw(this->textbox);
 }

@@ -128,6 +128,9 @@ int find_mismatched_parenthesis(std::string equation) {
 // supports turning 2x into 2 * x
 // does not assume input checking
 Queue<Token*> tokenize(std::string equation) {
+
+    if (find_mismatched_parenthesis(equation) != 0)
+        throw "mismatched parenthesis";
     Queue<Token*> tokenized;
 
     // load equation into queue, skip whitespace

@@ -40,6 +40,8 @@ public:
     sf::Color get_color() { return this->color; }
     void set_color(sf::Color color) { this->color = color; }
 
+    std::string get_string() { return this->function_string; }
+
     void set_start(double interval_start){ this->interval_start = interval_start; }
     void set_end(double interval_end){ this->interval_end = interval_end; }
 

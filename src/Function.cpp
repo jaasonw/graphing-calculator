@@ -19,7 +19,13 @@ Function::Function(std::string function_string) : Entity(), function_string(func
     this->color.r = rand() % 255;
     this->color.g = rand() % 255;
     this->color.b = rand() % 255;
-    this->postfix = infix_to_postfix(tokenize(function_string));
+    try {
+        this->postfix = infix_to_postfix(tokenize(function_string));
+    }
+    catch(...) {
+        std::cout << "error parsing function: " << function_string << std::endl;
+        return;
+    }
     this->update_graph();
 }
 Function::~Function() {

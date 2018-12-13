@@ -44,7 +44,7 @@ void Graph::step(sf::RenderWindow& window, sf::Event& event, bool poll) {
                 if (zoom > 10)
                     this->zoom -= ZOOM_INCREMENT;
             }
-            
+
             // panning
             if (event.key.code == sf::Keyboard::Left) {
                 this->set_x(this->get_x() - PAN_INCREMENT);
@@ -76,7 +76,14 @@ void Graph::step(sf::RenderWindow& window, sf::Event& event, bool poll) {
 
 void Graph::plot_expression(std::string expression, double low, double high) {
     std::cout << "plotting: " << expression << std::endl;
-    Function* func = new Function(expression);
+    Function* func;
+    try {
+        func = new Function(expression);
+    }
+    catch(...) {
+        std::cout << "error parsing function: " << expression << std::endl;
+        return;
+    }
     func->set_bounds(low, high);
     this->functions.push_back(func);
 }
@@ -104,7 +111,21 @@ void Graph::render_after(sf::RenderWindow& window) {
     sf::Text controls;
     controls.setFont(this->SourceCodePro);
     controls.setCharacterSize(15);
-    controls.setString(
-        "Arrow keys: pan\n]: Zoom in\n[: Zoom out\nR: Reset view");
+    controls.setString("Arrow keys: pan\n]: Zoom in\n[: Zoom out\nR: Reset view");
     window.draw(controls);
+
+    // draw functions list
+    for (int i = 0; i < this->functions.size(); i++) {
+        sf::CircleShape dot;
+        sf::Text function_text;
+        function_text.setFont(this->SourceCodePro);
+        function_text.setCharacterSize(15);
+        function_text.setString(this->functions.at(i)->get_string());
+        function_text.setPosition(SCREEN_WIDTH - 180, 15 + (i * 15));
+        dot.setRadius(5);
+        dot.setFillColor(this->functions.at(i)->get_color());
+        dot.setPosition(SCREEN_WIDTH - 200, 20 + (i * 15));
+        window.draw(function_text);
+        window.draw(dot);
+    }
 }

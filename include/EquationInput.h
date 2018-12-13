@@ -8,7 +8,7 @@
 
 class EquationInput : public Entity {
 private:
-    double height = 40;
+    double height = 30;
     double x = 0;
     double y = SCREEN_HEIGHT - height;
     bool active = true;
