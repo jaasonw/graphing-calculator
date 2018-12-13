@@ -36,6 +36,9 @@ Function::~Function() {
 void Function::step(sf::RenderWindow& window, sf::Event& event, bool poll) {
     // TODO: maybe change this so it plots a point every frame instead
     // of the constructor
+    for (auto p : this->points) {
+        p->set_visible(this->is_visible());
+    }
 }
 void Function::render(sf::RenderWindow& window) {
     // do translating to screen coords here

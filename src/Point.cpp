@@ -14,12 +14,12 @@ Point::Point(double graph_x, double graph_y, sf::Color color)
 }
 Point::~Point() {}
 void Point::step(sf::RenderWindow& window, sf::Event& event, bool poll) {
-    if (this->point.getPosition().x < 0 || this->point.getPosition().x > SCREEN_WIDTH)
-        this->set_visible(false);
-    else if (this->point.getPosition().y < 0 || this->point.getPosition().y > SCREEN_HEIGHT)
-        this->set_visible(false);
-    else
-        this->set_visible(true);
+    // if (this->point.getPosition().x < 0 || this->point.getPosition().x > SCREEN_WIDTH)
+    //     this->set_visible(false);
+    // else if (this->point.getPosition().y < 0 || this->point.getPosition().y > SCREEN_HEIGHT)
+    //     this->set_visible(false);
+    // else
+    //     this->set_visible(true);
 }
 
 void Point::render(sf::RenderWindow& window) { window.draw(this->point); }

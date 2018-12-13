@@ -4,6 +4,7 @@
 #include "EquationInput.h"
 #include "engine/Engine.h"
 #include "engine/Entity.h"
+#include "FunctionHistory.h"
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Mouse.hpp>
@@ -18,6 +19,7 @@ private:
     const double GRAPH_DEFAULT_ZOOM = 50;
     const double PAN_INCREMENT = 8;
 
+    std::vector<FunctionHistory*> function_history;
     std::vector<Function*> functions;
     const sf::Color AXIS_COLOR = sf::Color::Green;
     double zoom = GRAPH_DEFAULT_ZOOM;

@@ -101,6 +101,7 @@ void Graph::plot_expression(std::string expression, double low, double high) {
     }
     func->set_bounds(low, high);
     this->functions.push_back(func);
+    function_history.push_back(new FunctionHistory(func, this->SourceCodePro));
 }
 
 void Graph::render(sf::RenderWindow& window) {
@@ -130,17 +131,8 @@ void Graph::render_after(sf::RenderWindow& window) {
     window.draw(controls);
 
     // draw functions list
-    for (int i = 0; i < this->functions.size(); i++) {
-        sf::CircleShape dot;
-        sf::Text function_text;
-        function_text.setFont(this->SourceCodePro);
-        function_text.setCharacterSize(15);
-        function_text.setString(this->functions.at(i)->get_string());
-        function_text.setPosition(SCREEN_WIDTH - 180, 15 + (i * 15));
-        dot.setRadius(5);
-        dot.setFillColor(this->functions.at(i)->get_color());
-        dot.setPosition(SCREEN_WIDTH - 200, 20 + (i * 15));
-        window.draw(function_text);
-        window.draw(dot);
+    for (int i = 0; i < this->function_history.size(); i++) {
+        this->function_history.at(i)->set_x(SCREEN_WIDTH - 180);
+        this->function_history.at(i)->set_y(15 + (i * 30));
     }
 }
