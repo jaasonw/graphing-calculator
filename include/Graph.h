@@ -29,6 +29,10 @@ private:
 
     EquationInput equation_input;
 
+    bool dragging = false;
+    sf::Vector2i dragpos1;
+    sf::Vector2i dragpos2;
+
 public:
     Graph();
     void step(sf::RenderWindow& window, sf::Event& event, bool poll);

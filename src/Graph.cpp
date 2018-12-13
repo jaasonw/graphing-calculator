@@ -19,15 +19,29 @@ Graph::Graph() : Entity() {
     this->x_axis.setFillColor(AXIS_COLOR);
     this->y_axis.setFillColor(AXIS_COLOR);
 
-    // functions
-    // this->plot_expression("5x");
-    // this->plot_expression("3x + 2");
-    // this->plot_expression("1/x");
-    // this->plot_expression("tan(x)");
+    // initialize drag stuff
+    this->dragpos1 = sf::Vector2i(0,0);
+    this->dragpos2 = sf::Vector2i(0,0);
 }
 
 void Graph::step(sf::RenderWindow& window, sf::Event& event, bool poll) {
     // event handling stuff
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        if (!dragging) {
+            dragging = true;
+            this->dragpos1 = sf::Mouse::getPosition(window);
+            this->dragpos2 = sf::Mouse::getPosition(window);
+        }
+        else if (dragging) {
+            this->dragpos1 = dragpos2;
+            this->dragpos2 = sf::Mouse::getPosition(window);
+            this->set_x(this->get_x() + dragpos2.x - dragpos1.x);
+            this->set_y(this->get_y() + dragpos2.y - dragpos1.y);
+        }
+    }
+    else {
+        dragging = false;
+    }
     if (poll) {
         // mouse wheel zooming
         if (event.type == sf::Event::MouseWheelScrolled) {
