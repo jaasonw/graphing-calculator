@@ -13,7 +13,7 @@ class Function : public Entity {
 private:
     double interval_start = -50;
     double interval_end = 50;
-    double point_frequency = 0.05;
+    double point_frequency = 0.1;
     double zoom;
     double line_thickness = 2;
     sf::Color color = sf::Color::Red;
