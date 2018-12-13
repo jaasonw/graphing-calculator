@@ -12,7 +12,7 @@ private:
 
 public:
     Point();
-    Point(double graph_x, double graph_y);
+    Point(double graph_x, double graph_y, sf::Color color);
     ~Point();
     void step(sf::RenderWindow& window, const sf::Event& event);
     void render(sf::RenderWindow& window);

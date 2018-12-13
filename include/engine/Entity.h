@@ -13,9 +13,14 @@ public:
     
     // runs every frame
     virtual void step(sf::RenderWindow& window, const sf::Event& event);
+    virtual void step(sf::RenderWindow& window, sf::Event& event);
 
     // runs every frame, reserved for drawing
     virtual void render(sf::RenderWindow& window);
+
+    // really bad way of doing this but time is scarce
+    // reserved for things that need to be drawn at the top (huds, overlays, etc)
+    virtual void render_after(sf::RenderWindow& window);
 
     void set_x(int x) { screen_x = x; }
     void set_y(int y) { screen_y = y; }

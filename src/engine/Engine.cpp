@@ -25,6 +25,11 @@ void Engine::run() {
             if (entities.at(i)->is_visible())
                 entities.at(i)->render(window);
         }
+        // render loop
+        for (unsigned int i = 0; i < entities.size(); i++) {
+            if (entities.at(i)->is_visible())
+                entities.at(i)->render_after(window);
+        }
         window.display();
         double fps = (1000000.0 / clock.restart().asMicroseconds());
         window.setTitle("totally not scuffed graphing FPS: " + std::to_string(fps));

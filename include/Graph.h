@@ -1,6 +1,7 @@
 #pragma once
 #include "Function.h"
 #include "constants.h"
+#include "EquationInput.h"
 #include "engine/Engine.h"
 #include "engine/Entity.h"
 #include <SFML/Graphics/Font.hpp>
@@ -26,9 +27,12 @@ private:
 
     sf::Font SourceCodePro;
 
+    EquationInput equation_input;
+
 public:
     Graph();
     void step(sf::RenderWindow& window, const sf::Event& event);
     void plot_expression(std::string expression, double low = -50, double high = 50);
     void render(sf::RenderWindow& window);
+    void render_after(sf::RenderWindow& window);
 };

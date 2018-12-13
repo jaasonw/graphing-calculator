@@ -9,4 +9,6 @@ Entity::~Entity() {
 }
 
 void Entity::step(sf::RenderWindow& window, const sf::Event& event) {}
+void Entity::step(sf::RenderWindow& window, sf::Event& event) {}
 void Entity::render(sf::RenderWindow& window) {}
+void Entity::render_after(sf::RenderWindow& window) {}

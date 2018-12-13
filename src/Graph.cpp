@@ -4,6 +4,9 @@ Graph::Graph() : Entity() {
     // load font
     this->SourceCodePro.loadFromFile("SourceCodePro-Regular.ttf");
 
+    // load font into text input
+    equation_input.set_font(this->SourceCodePro);
+
     // set position
     this->set_x(SCREEN_WIDTH / 2);
     this->set_y(SCREEN_HEIGHT / 2);
@@ -17,14 +20,21 @@ Graph::Graph() : Entity() {
     this->y_axis.setFillColor(AXIS_COLOR);
 
     // functions
-    // this->plot_expression("5x");
-    // this->plot_expression("3x + 2");
+    this->plot_expression("5x");
+    this->plot_expression("3x + 2");
     this->plot_expression("1/x");
     this->plot_expression("tan(x)");
 }
 
 void Graph::step(sf::RenderWindow& window, const sf::Event& event) {
-    if (event.type == sf::Event::KeyPressed) {
+    // event handling stuff
+    // mouse wheel zooming
+    // if (event.type == sf::Event::MouseWheelScrolled) {
+    //     if (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel) {
+    //         this->zoom += ZOOM_INCREMENT * (event.mouseWheelScroll.delta / 10);
+    //     }
+    // }
+    if (event.type == sf::Event::KeyPressed && !this->equation_input.is_active()) {
         // zooming
         if (event.key.code == sf::Keyboard::RBracket) {
             this->zoom += ZOOM_INCREMENT;
@@ -33,6 +43,7 @@ void Graph::step(sf::RenderWindow& window, const sf::Event& event) {
             if (zoom > 10)
                 this->zoom -= ZOOM_INCREMENT;
         }
+
 
         // panning
         if (event.key.code == sf::Keyboard::Left) {
@@ -50,21 +61,25 @@ void Graph::step(sf::RenderWindow& window, const sf::Event& event) {
 
         // reset view
         if (event.key.code == sf::Keyboard::R) {
-            this->set_x(SCREEN_HEIGHT / 2);
-            this->set_y(SCREEN_WIDTH / 2);
+            this->set_x(SCREEN_WIDTH / 2);
+            this->set_y(SCREEN_HEIGHT / 2);
             this->zoom = GRAPH_DEFAULT_ZOOM;
         }
     }
+
+    // if (equation_input.peek_input() != "") {
+    //     this->plot_expression(equation_input.get_input());
+    // }
+}
+
+void Graph::plot_expression(std::string expression, double low, double high) {
+    std::cout << "plotting: " << expression << std::endl;
+    Function* func = new Function(expression);
+    func->set_bounds(low, high);
+    this->functions.push_back(func);
 }
 
 void Graph::render(sf::RenderWindow& window) {
-    // draw controls text
-    sf::Text controls;
-    controls.setFont(this->SourceCodePro);
-    controls.setCharacterSize(15);
-    controls.setString("Arrow keys: pan\n]: Zoom in\n[: Zoom out\nR: Reset view");
-    window.draw(controls);
-
     // set positions
     this->x_axis.setOrigin(sf::Vector2f(this->x_axis.getSize().x / 2, this->x_axis.getSize().y / 2));
     this->x_axis.setPosition(sf::Vector2f(this->get_x(), this->get_y()));
@@ -82,8 +97,12 @@ void Graph::render(sf::RenderWindow& window) {
     window.draw(this->y_axis);
 }
 
-void Graph::plot_expression(std::string expression, double low, double high) {
-    Function* func = new Function(expression);
-    func->set_bounds(low, high);
-    this->functions.push_back(func);
+void Graph::render_after(sf::RenderWindow& window) {
+    // draw controls text
+    sf::Text controls;
+    controls.setFont(this->SourceCodePro);
+    controls.setCharacterSize(15);
+    controls.setString(
+        "Arrow keys: pan\n]: Zoom in\n[: Zoom out\nR: Reset view");
+    window.draw(controls);
 }
