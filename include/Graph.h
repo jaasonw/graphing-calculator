@@ -6,6 +6,7 @@
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Mouse.hpp>
+#include <string>
 #include <vector>
 
 class Graph : public Entity {
@@ -28,5 +29,6 @@ private:
 public:
     Graph();
     void step(sf::RenderWindow& window, const sf::Event& event);
+    void plot_expression(std::string expression, double low = -50, double high = 50);
     void render(sf::RenderWindow& window);
 };

@@ -6,13 +6,14 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Vertex.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
+#include <string>
 #include <vector>
 
 class Function : public Entity {
 private:
     double interval_start = -50;
     double interval_end = 50;
-    double point_frequency = 0.03;
+    double point_frequency = 0.05;
     double zoom;
     double line_thickness = 2;
     sf::Color color = sf::Color::Red;
@@ -20,11 +21,15 @@ private:
     double origin_x;
     double origin_y;
 
+    std::string function_string;
     Queue<Token*> postfix;
     std::vector<Point*> points;
 
+    bool done_plotting = false;
+
 public:
     Function();
+    Function(std::string function_string);
     ~Function();
     void step(sf::RenderWindow& window, const sf::Event& event);
     void render(sf::RenderWindow& window);
@@ -34,4 +39,12 @@ public:
 
     sf::Color get_color() { return this->color; }
     void set_color(sf::Color color) { this->color = color; }
+
+    void set_start(double interval_start){ this->interval_start = interval_start; }
+    void set_end(double interval_end){ this->interval_end = interval_end; }
+
+    void set_bounds(double low, double high);
+
+    void update_graph();
+    // void update_positions();
 };

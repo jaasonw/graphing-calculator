@@ -17,7 +17,10 @@ Graph::Graph() : Entity() {
     this->y_axis.setFillColor(AXIS_COLOR);
 
     // functions
-    this->functions.push_back(new Function());
+    // this->plot_expression("5x");
+    // this->plot_expression("3x + 2");
+    this->plot_expression("1/x");
+    this->plot_expression("tan(x)");
 }
 
 void Graph::step(sf::RenderWindow& window, const sf::Event& event) {
@@ -77,4 +80,10 @@ void Graph::render(sf::RenderWindow& window) {
     // draw axis
     window.draw(this->x_axis);
     window.draw(this->y_axis);
+}
+
+void Graph::plot_expression(std::string expression, double low, double high) {
+    Function* func = new Function(expression);
+    func->set_bounds(low, high);
+    this->functions.push_back(func);
 }
