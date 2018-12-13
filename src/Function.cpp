@@ -10,8 +10,15 @@ Function::Function() : Entity() {
         std::cout << **it << std::endl;
     }
     this->update_graph();
+
+    this->color.r = rand() % 255;
+    this->color.g = rand() % 255;
+    this->color.b = rand() % 255;
 }
 Function::Function(std::string function_string) : Entity(), function_string(function_string) {
+    this->color.r = rand() % 255;
+    this->color.g = rand() % 255;
+    this->color.b = rand() % 255;
     this->postfix = infix_to_postfix(tokenize(function_string));
     this->update_graph();
 }
@@ -33,7 +40,7 @@ void Function::render(sf::RenderWindow& window) {
         if (i != 0) {
             double x2 = (points[i - 1]->get_graph_x() * this->zoom) + origin_x;
             double y2 = -((points[i - 1]->get_graph_y() * this->zoom)) + origin_y;
-            window.draw(create_line(x1, y1, x2, y2, color));
+            window.draw(create_line(x1, y1, x2, y2, this->color));
         }
     }
 }
@@ -47,7 +54,7 @@ void Function::plot(double screen_x, double screen_y, double zoom) {
 void Function::update_graph() {
     for (double i = interval_start; i < interval_end; i += point_frequency) {
         try {
-            points.push_back(new Point(i, eval(postfix, i)));
+            points.push_back(new Point(i, eval(postfix, i), color));
         }
         catch(...) {
             std::cout << "asymtote i assume?" << std::endl;

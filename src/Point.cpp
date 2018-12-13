@@ -6,8 +6,8 @@ Point::Point() : Entity() {
     this->point.setOrigin(sf::Vector2f(RADIUS, RADIUS));
 }
 
-Point::Point(double graph_x, double graph_y)
-    : graph_x(graph_x), graph_y(graph_y) {
+Point::Point(double graph_x, double graph_y, sf::Color color)
+    : graph_x(graph_x), graph_y(graph_y), color(color) {
     this->point.setRadius(RADIUS);
     this->point.setFillColor(color);
     this->point.setOrigin(sf::Vector2f(RADIUS, RADIUS));
