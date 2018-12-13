@@ -51,55 +51,84 @@ double eval(Queue<Token*> tokens, double variable) {
     return result_number;
 }
 
-Queue<Token*> infix_to_postfix(Queue<Token*> infix) {
+Queue<Token*> infix_to_postfix(Queue<Token*>& infix) {
     Queue<Token*> output_queue;
     Stack<Token*> operator_stack;
+
     while (!infix.empty()) {
         Token* token = infix.pop();
-        if (token->TypeOf() == NUMBER) {
-            output_queue.push(token);
-        } else if (token->TypeOf() == FUNCTION) {
-            operator_stack.push(token);
-        } else if (token->TypeOf() == OPERATOR) {
-            Operator* op = static_cast<Operator*>(token);
-            if (op->symbol() != '(' && !operator_stack.empty()) {
-                operator_stack.empty();
-                while (!operator_stack.empty() &&
-                       (*operator_stack.begin())->TypeOf() == FUNCTION) {
-                    auto a = (*operator_stack.begin());
-                    std::cout << a << std::endl;
-                    output_queue.push(operator_stack.pop());
-                }
-                if ((*operator_stack.begin())->TypeOf() == OPERATOR) {
-                    while (static_cast<Operator*>(*operator_stack.begin())
-                               ->precedence() >= op->precedence()) {
-                        output_queue.push(operator_stack.pop());
+        switch (token->TypeOf()) {
+            case NUMBER:
+                output_queue.push(token);
+                break;
+            case FUNCTION:
+                operator_stack.push(token);
+                break;
+            case OPERATOR:
+                Token* top;
+                if (!operator_stack.empty()) {
+                    top = *(operator_stack.top());
+                    while (top->TypeOf() == OPERATOR) {
+                    // while (top->TypeOf() == FUNCTION || top->TypeOf() == OPERATOR) {
+                        // if (top->TypeOf() == OPERATOR) {
+                            // std::cout << static_cast<Operator*>(top)->symbol() << std::endl;
+                            if (static_cast<Operator*>(top)->symbol() != '(') {
+                                int top_precedence = static_cast<Operator*>(top)->precedence();
+                                int top_association = static_cast<Operator*>(top)->association();
+                                int current_precedence = static_cast<Operator*>(token)->precedence();
+
+                                if (top_precedence > current_precedence || ((top_precedence == current_precedence) && top_association == LEFT)) {
+                                    output_queue.push(operator_stack.pop());
+                                }
+                                else {
+                                    operator_stack.push(token);
+                                }
+                            }
+                            else {
+                                break;
+                            }
+                        // }
+                        // if (top->TypeOf() == FUNCTION) {
+                        //     output_queue.push(operator_stack.pop());
+                        // }
+                        if (operator_stack.empty())
+                            break;
+                        else
+                            top = *(operator_stack.top());
                     }
                 }
-            } else if (op->symbol() == '(') {
-                operator_stack.push(op);
-            } else if (op->symbol() == ')') {
-                while (
-                    static_cast<Operator*>(*operator_stack.begin())->symbol() !=
-                    '(') {
-                    output_queue.push(operator_stack.pop());
+
+                operator_stack.push(token);
+
+                if (static_cast<Operator*>(top)->symbol() == ')') {
+                    // discard the )
+                    delete operator_stack.pop();
+                    if (!operator_stack.empty()) {
+                        Token* top = *(operator_stack.top());
+                        while (static_cast<Operator*>(top)->symbol() != '(') {
+                            output_queue.push(operator_stack.pop());
+                            if (operator_stack.empty()) {
+                                std::cout << "ERROR: mismatched parenthesis" << std::endl;
+                                throw "ERROR: mismatched parenthesis";
+                            }
+                        }
+                        // discard the (
+                        delete operator_stack.pop();
+                    }
                 }
-                // discard the opening (
-                delete operator_stack.pop();
-            } else {
-                operator_stack.push(op);
-            }
-            delete op;
+                break;
         }
-        // delete token;
+
     }
     while (!operator_stack.empty()) {
         auto op = static_cast<Operator*>(operator_stack.pop());
         if (op->symbol() != '(' && op->symbol() != ')')
             output_queue.push(op);
+        else
+            delete op;
     }
     return output_queue;
-}
+    }
 
 // takes an equation string and counts the number of mismatched parenthesis
 // returns a negative for number of left parenthesis missing

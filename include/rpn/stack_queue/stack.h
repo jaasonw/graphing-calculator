@@ -43,7 +43,7 @@ public:
 
     T pop();
     void push(const T& item);
-    Iterator begin() const;
+    Iterator top() const;
     Iterator end() const;
     bool empty() const;
     int size() const;
@@ -76,7 +76,7 @@ T Stack<T>::pop() {
 }
 
 template <typename T>
-typename Stack<T>::Iterator Stack<T>::begin() const {
+typename Stack<T>::Iterator Stack<T>::top() const {
     return Stack<T>::Iterator(this->list.begin());
 }
 
@@ -87,7 +87,7 @@ typename Stack<T>::Iterator Stack<T>::end() const {
 
 template <typename T>
 bool Stack<T>::empty() const {
-    return this->list.empty();
+    return (this->list.empty() || this->length == 0);
 }
 
 template <typename T>
@@ -97,7 +97,7 @@ int Stack<T>::size() const {
 
 template <typename U>
 std::ostream& operator<<(std::ostream& outs, const Stack<U>& stack) {
-    for (typename Stack<U>::Iterator it = stack.begin(); it != stack.end(); it++) {
+    for (typename Stack<U>::Iterator it = stack.top(); it != stack.end(); it++) {
         outs << *it << " ";
     }
     return outs;

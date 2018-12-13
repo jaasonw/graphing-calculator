@@ -12,7 +12,7 @@ private:
 public:
     FunctionToken();
     FunctionToken(std::string function);
-    int TypeOf() const { return FUNCTION; };
+    int TypeOf() const;
     std::string function_name() const;
     std::ostream& print(std::ostream& out) const;
     double operate(double x);

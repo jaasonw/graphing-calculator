@@ -27,8 +27,9 @@ double FunctionToken::operate(double x) {
         return x;
 }
 
-
 std::string FunctionToken::function_name() const { return function; }
+
+int FunctionToken::TypeOf() const { return FUNCTION; };
 
 std::ostream& FunctionToken::print(std::ostream& out) const {
     out << function;

@@ -13,6 +13,7 @@ public:
     Operator(char _symbol);
     int TypeOf() const { return OPERATOR; };
     int precedence() const;
+    int association() const;
     char symbol() const;
     std::ostream &print(std::ostream &out) const;
     double operate(double a, double b);

@@ -19,7 +19,7 @@ int main(int argc, char const* argv[]) {
     // print infix expression
     cout << "infix: ";
     for (auto it = infix.begin(); it != NULL; it++) {
-        cout << **it << " ";
+        cout << (*it)->TypeOf() << " ";
     }
     cout << endl;
 

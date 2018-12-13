@@ -38,6 +38,23 @@ int Operator::precedence() const {
     }
 }
 
+int Operator::association() const {
+    switch (this->_symbol) {
+        case '+':
+            return LEFT;
+        case '-':
+            return LEFT;
+        case '*':
+            return LEFT;
+        case '/':
+            return LEFT;
+        case '^':
+            return RIGHT;
+        default:
+            return -1;
+    }
+}
+
 char Operator::symbol() const {
     return _symbol;
 }
