@@ -27,12 +27,12 @@ Graph::Graph() : Entity() {
 void Graph::step(sf::RenderWindow& window, sf::Event& event, bool poll) {
     // event handling stuff
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        if (!dragging) {
-            dragging = true;
+        if (!this->dragging) {
+            this->dragging = true;
             this->dragpos1 = sf::Mouse::getPosition(window);
             this->dragpos2 = sf::Mouse::getPosition(window);
         }
-        else if (dragging) {
+        else if (this->dragging) {
             this->dragpos1 = dragpos2;
             this->dragpos2 = sf::Mouse::getPosition(window);
             this->set_x(this->get_x() + dragpos2.x - dragpos1.x);
@@ -40,7 +40,7 @@ void Graph::step(sf::RenderWindow& window, sf::Event& event, bool poll) {
         }
     }
     else {
-        dragging = false;
+        this->dragging = false;
     }
     if (poll) {
         // mouse wheel zooming

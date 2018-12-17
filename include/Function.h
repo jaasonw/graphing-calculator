@@ -23,7 +23,7 @@ private:
 
     std::string function_string;
     Queue<Token*> postfix;
-    std::vector<Point*> points;
+    std::vector<sf::Vector2f> points;
 
     bool done_plotting = false;
 
