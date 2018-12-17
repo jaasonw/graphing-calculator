@@ -1,7 +1,6 @@
 #include "FunctionHistory.h"
 
-FunctionHistory::FunctionHistory() : Entity() {
-}
+FunctionHistory::FunctionHistory() : Entity() {}
 
 FunctionHistory::FunctionHistory(Function* function, sf::Font& font)
     : function(function), font(font) {}

@@ -1,5 +1,4 @@
 #pragma once
-#include "Point.h"
 #include "engine/Entity.h"
 #include "rpn/rpn.h"
 #include "util.h"
