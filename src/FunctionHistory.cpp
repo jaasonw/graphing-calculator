@@ -2,8 +2,9 @@
 
 FunctionHistory::FunctionHistory() : Entity() {}
 
-FunctionHistory::FunctionHistory(Function* function, sf::Font& font)
-    : function(function), font(font) {}
+FunctionHistory::FunctionHistory(Function* function, sf::Font& font) : function(function) {
+    this->font = &font;
+}
 
 
 void FunctionHistory::step(sf::RenderWindow& window, sf::Event& event, bool poll) {
@@ -21,7 +22,7 @@ void FunctionHistory::step(sf::RenderWindow& window, sf::Event& event, bool poll
 }
 
 void FunctionHistory::render_after(sf::RenderWindow& window) {
-    this->text.setFont(this->font);
+    this->text.setFont(*this->font);
     this->text.setCharacterSize(20);
     this->text.setString(this->function->get_string());
     this->text.setPosition(this->get_x(), this->get_y());

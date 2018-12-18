@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Vertex.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -47,5 +48,4 @@ public:
     void set_bounds(double low, double high);
 
     void update_graph();
-    // void update_positions();
 };

@@ -10,7 +10,7 @@
 class FunctionHistory : public Entity {
 private:
     sf::CircleShape dot;
-    sf::Font font;
+    sf::Font* font;
     sf::Text text;
     std::string function_text;
     Function* function;

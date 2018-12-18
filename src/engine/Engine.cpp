@@ -7,14 +7,20 @@ Engine::Engine() : window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "hihi") {
     window.setFramerateLimit(FPS);
 }
 
+Engine::~Engine() {
+    this->stop();
+}
+
 void Engine::run() {
     sf::Clock clock;
     while (window.isOpen()) {
         sf::Event event;
         bool poll = window.pollEvent(event);
         if (poll) {
-            if (event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed) {
                 window.close();
+                this->stop();
+            }
         }
         // step loop
         for (unsigned int i = 0; i < entities.size(); i++) {
@@ -37,6 +43,12 @@ void Engine::run() {
     }
 }
 
+void Engine::stop() {
+    for (auto i = 0; i < entities.size(); i++) {
+        delete entities[i];
+    }
+}
+
 Entity* Engine::add_entity(Entity* entity) {
     entities.push_back(entity);
     return entity;
@@ -51,5 +63,4 @@ void Engine::remove_entity(Entity* entity) {
             entities.pop_back();
         }
     }
-    entities.pop_back();
 }

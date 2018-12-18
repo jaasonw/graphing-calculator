@@ -24,6 +24,15 @@ Graph::Graph() : Entity() {
     this->dragpos2 = sf::Vector2i(0,0);
 }
 
+Graph::~Graph() {
+    for (int i = 0; i < this->functions.size(); i++) {
+        delete this->functions[i];
+    }
+    for (int i = 0; i < this->function_history.size(); i++) {
+        delete this->function_history[i];
+    }
+}
+
 void Graph::step(sf::RenderWindow& window, sf::Event& event, bool poll) {
     // event handling stuff
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {

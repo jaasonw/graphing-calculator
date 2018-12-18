@@ -16,14 +16,14 @@ private:
     std::string temp_input = "";
     sf::RectangleShape textbox;
     sf::Color color = sf::Color::Black;
-    sf::Font font;
+    sf::Font* font;
 public:
     EquationInput();
     ~EquationInput();
     std::string get_input();
     std::string peek_input() { return this->current_input; };
     bool is_active() { return this->active; }
-    void set_font(sf::Font& font) { this->font = font; }
+    void set_font(sf::Font& font) { this->font = &font; }
     void step(sf::RenderWindow& window, sf::Event& event, bool poll);
     void render_after(sf::RenderWindow& window);
 };

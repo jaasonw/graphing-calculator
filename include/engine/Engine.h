@@ -14,7 +14,9 @@ private:
     
 public:
     Engine();
+    ~Engine();
     void run();
+    void stop();
     static Entity* add_entity(Entity* entity);
     static void remove_entity(Entity* entity);
 };

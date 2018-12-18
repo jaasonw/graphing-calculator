@@ -7,6 +7,7 @@ EquationInput::EquationInput() : Entity() {
     this->textbox.setPosition(x, y);
     this->textbox.setSize(sf::Vector2f(SCREEN_WIDTH, this->height));
     this->textbox.setFillColor(color);
+    this->font = NULL;
 }
 EquationInput::~EquationInput() {}
 
@@ -52,12 +53,12 @@ std::string EquationInput::get_input() {
 void EquationInput::render_after(sf::RenderWindow& window) {
     sf::Text input;
     sf::Text fx;
-    fx.setFont(this->font);
+    fx.setFont(*this->font);
     fx.setCharacterSize(20);
     fx.setString("f(x): ");
     fx.setPosition(x, y + this->height - 25);
 
-    input.setFont(this->font);
+    input.setFont(*this->font);
     input.setCharacterSize(20);
     input.setString(temp_input);
     input.setPosition(60 + x, y + this->height - 25);

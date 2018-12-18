@@ -1,6 +1,5 @@
 #include "Function.h"
 #include "engine/Engine.h"
-#include <iostream>
 
 Function::Function() : Entity() {
     // example test function
@@ -15,6 +14,7 @@ Function::Function() : Entity() {
     this->color.g = rand() % 255;
     this->color.b = rand() % 255;
 }
+
 Function::Function(std::string function_string) : Entity(), function_string(function_string) {
     this->color.r = rand() % 255;
     this->color.g = rand() % 255;
@@ -28,7 +28,12 @@ Function::Function(std::string function_string) : Entity(), function_string(func
     }
     this->update_graph();
 }
-Function::~Function() {}
+
+Function::~Function() {
+    while (!postfix.empty()) {
+        delete postfix.pop();
+    }
+}
 
 void Function::step(sf::RenderWindow& window, sf::Event& event, bool poll) {
     // TODO: maybe change this so it plots a point every frame instead
