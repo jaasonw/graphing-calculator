@@ -10,9 +10,6 @@ double eval(Queue<Token*> tokens, double variable) {
                 Operand* right = static_cast<Operand*>(call_stack.pop());
                 Operand* left = static_cast<Operand*>(call_stack.pop());
                 call_stack.push(new Operand(operator_token->operate(left->get_number(), right->get_number())));
-                // delete left;
-                // delete right;
-                // delete current_token;
                 break;
             }
             case NUMBER:
@@ -21,14 +18,11 @@ double eval(Queue<Token*> tokens, double variable) {
             case VARIABLE:
                 // push in operand to take the place of the variable
                 call_stack.push(new Operand(variable));
-                // make sure to delete the variable token
-                // delete current_token;
                 break;
             case FUNCTION:
                 FunctionToken* function_token = static_cast<FunctionToken*>(current_token);
                 Operand* num = static_cast<Operand*>(call_stack.pop());
                 call_stack.push(new Operand(function_token->operate(num->get_number())));
-                // delete num;
                 break;
         }
     }
@@ -36,8 +30,7 @@ double eval(Queue<Token*> tokens, double variable) {
     double result_number = static_cast<Operand*>(result)->get_number();
     delete result;
 
-    // clean up the rest of the queue & stack if for some reason they're not
-    // empty
+    // clean up the rest of the queue & stack if for some reason they're not empty
     while (!tokens.empty()) {
         // delete tokens.pop();
     }
@@ -142,6 +135,7 @@ Queue<Token*> tokenize(std::string equation) {
     }
 
     Token* last_token = NULL;
+    bool unary = false;
     while (!token_chars.empty()) {
         // get 1st character
         std::string token = "";
@@ -183,8 +177,22 @@ Queue<Token*> tokenize(std::string equation) {
         }
         // if it's not a letter or a number it's probably a symbol
         else {
-            last_token = new Operator(token.at(0));
+            // unary operator, insert a -1 * ()
+            if ((last_token == NULL || last_token->TypeOf() != NUMBER) && token.at(0) == '-') {
+                tokenized.push(new Operand(-1));
+                tokenized.push(new Operator('*'));
+                last_token = new Operator('(');
+                unary = true;
+            }
+            else {
+                last_token = new Operator(token.at(0));
+            }
             tokenized.push(last_token);
+        }
+        if (unary) {
+            last_token = new Operator(')');
+            tokenized.push(last_token);
+            unary = false;
         }
     }
     return tokenized;

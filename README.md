@@ -12,4 +12,4 @@ Press enter to begin entering a function
 
 Click the dots on the right to hide and show functions
 
-Supports trigonomic functions, inverse trigonomic functions, and the square root function sqrt()
+Supports trigonomic functions, inverse trigonomic functions, unary operator, and the square root function sqrt()
