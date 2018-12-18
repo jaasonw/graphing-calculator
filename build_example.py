@@ -1,51 +1,43 @@
-
 # trash ass build script xd
 import os
 import time
 
-try:
-    os.remove('a.exe')
-except:
-    pass
+compiler = "g++"
+executable = "graphing_calculator.exe"
 
 includes = []
+sources = []
+link = []
+flags = []
+
 includes.append("include")
 includes.append("include/rpn")
 includes.append("include/engine")
 includes.append("[SFML INCLUDE PATH]")
 
-sources = []
 sources.append("src")
 sources.append("src/rpn")
 sources.append("src/engine")
 
-link = []
-link.append("sfml-audio-d")
-link.append("sfml-graphics-d")
-link.append("sfml-network-d")
-link.append("sfml-system-d")
-link.append("sfml-window-d")
+link.append("sfml-audio")
+link.append("sfml-graphics")
+link.append("sfml-network")
+link.append("sfml-system")
+link.append("sfml-window")
 
-
-compiler = "g++"
-
-
-flags = []
 flags.append("-std=c++11")
 flags.append("-Wall")
 flags.append("-Wextra")
 flags.append("-g")
 
+# for some reason clang wont compile unless in c++17 mode and with these flags
 if compiler == "clang++":
     flags.append("-std=c++17")
     flags.append("-Xclang -flto-visibility-public-std")
 
 flag_str = ""
-
 for f in flags:
     flag_str += f + " "
-
-output = "a.exe"
 
 include_str = ""
 for directory in includes:
@@ -61,7 +53,12 @@ link_str = ""
 for l in link:
     sources_str += f"-l{l} "
 
-cmd = f"{compiler} {flag_str} {include_str} -o {output} main.cpp {sources_str}"
+try:
+    os.remove(executable)
+except:
+    pass
+
+cmd = f"{compiler} {flag_str} {include_str} -o {executable} main.cpp {sources_str}"
 print(cmd)
 t1 = time.time()
 os.system(cmd)

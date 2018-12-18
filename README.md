@@ -2,9 +2,9 @@
 
 ![graph](https://i.imgur.com/V5KfMuD.png)
 
-Graphing calculator written using SFML 2.5.1 for my object oriented C++ final. Implements the shunting yard algorithm, a reverse polish notation evaluator, and an input tokenizer that accepts an equation as a string and tokenizes it for shunting yard
+Graphing calculator written using SFML 2.5.1 for my fundamentals of computer science II c++ final. Implements an input tokenizer that tokenizes an equation into tokens, the shunting yard algorithm to convert them to reverse polish notation, and an evaluator for reverse polish notation.
 
-Modify build_example.py with the SFML include path to build with g++, might also work with clang if you tweak the script a bit
+Modify build_example.py with the SFML include path to build with g++, should also work with clang but not thoroughly tested.
 
 # Usage
 
