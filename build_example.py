@@ -46,7 +46,7 @@ for directory in includes:
 sources_str = ""
 for src in sources:
     for _file in os.listdir(src):
-        if (not os.path.isdir(f"{src}/{_file} ")):
+        if (not os.path.isdir(os.path.join(src, _file))):
             sources_str += f"{src}/{_file} "
 
 link_str = ""
