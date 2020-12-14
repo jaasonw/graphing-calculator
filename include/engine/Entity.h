@@ -6,6 +6,7 @@ private:
     bool visible = true;
     double screen_x;
     double screen_y;
+    int layer = 0;
 
 public:
     Entity();

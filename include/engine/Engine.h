@@ -4,11 +4,12 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Event.hpp>
+#include <list>
 #include <iostream>
 
 class Engine {
 private:
-    static std::vector<Entity*> entities;
+    static std::list<Entity*> entities;
     static sf::Font SourceCodePro;
     sf::RenderWindow window;
     

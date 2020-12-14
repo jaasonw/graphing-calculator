@@ -1,7 +1,7 @@
 #include "engine/Engine.h"
 
 // static vars
-std::vector<Entity*> Engine::entities = std::vector<Entity*>();
+std::list<Entity*> Engine::entities = std::list<Entity*>();
 
 Engine::Engine() : window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "hihi") {
     window.setFramerateLimit(FPS);
@@ -23,19 +23,22 @@ void Engine::run() {
             }
         }
         // step loop
-        for (unsigned int i = 0; i < entities.size(); i++) {
-            entities.at(i)->step(window, event, poll);
+        for (auto it = entities.begin(); it != entities.end(); ++it) {
+            Entity *ent = *it;
+            ent->step(window, event, poll);
         }
         window.clear();
         // render loop
-        for (unsigned int i = 0; i < entities.size(); i++) {
-            if (entities.at(i)->is_visible())
-                entities.at(i)->render(window);
+        for (auto it = entities.begin(); it != entities.end(); ++it) {
+            Entity *ent = *it;
+            if (ent->is_visible())
+                ent->render(window);
         }
         // render loop
-        for (unsigned int i = 0; i < entities.size(); i++) {
-            if (entities.at(i)->is_visible())
-                entities.at(i)->render_after(window);
+        for (auto it = entities.begin(); it != entities.end(); ++it) {
+            Entity *ent = *it;
+            if (ent->is_visible())
+                ent->render_after(window);
         }
         window.display();
         double fps = (1000000.0 / clock.restart().asMicroseconds());
@@ -44,23 +47,17 @@ void Engine::run() {
 }
 
 void Engine::stop() {
-    for (auto i = 0; i < entities.size(); i++) {
-        delete entities[i];
+    for (auto it = entities.begin(); it != entities.end(); ++it) {
+        Entity* ent = *it;
+        delete ent;
     }
 }
 
 Entity* Engine::add_entity(Entity* entity) {
-    entities.push_back(entity);
+    entities.emplace_back(entity);
     return entity;
 }
 
 void Engine::remove_entity(Entity* entity) {
-    for (unsigned int i = 0; i < entities.size(); i++) {
-        if (entities[i] == entity) {
-            // replace entity at i with last element
-            entities[i] = entities[entities.size() - 1];
-            // remove old last element
-            entities.pop_back();
-        }
-    }
+    entities.remove(entity);
 }
