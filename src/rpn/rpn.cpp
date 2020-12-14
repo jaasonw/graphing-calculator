@@ -1,15 +1,25 @@
 #include "rpn/rpn.h"
 
-double eval(Queue<Token*> tokens, double variable) {
-    Stack<Token*> call_stack = Stack<Token*>();
+double eval(std::queue<std::shared_ptr<Token>> tokens, double variable) {
+    std::stack<std::shared_ptr<Token>> call_stack =
+        std::stack<std::shared_ptr<Token>>();
     while (!tokens.empty()) {
-        Token* current_token = tokens.pop();
-        switch(current_token->TypeOf()) {
+        std::shared_ptr<Token> current_token = tokens.front();
+        tokens.pop();
+        switch (current_token->TypeOf()) {
             case OPERATOR: {
-                Operator* operator_token = static_cast<Operator*>(current_token);
-                Operand* right = static_cast<Operand*>(call_stack.pop());
-                Operand* left = static_cast<Operand*>(call_stack.pop());
-                call_stack.push(new Operand(operator_token->operate(left->get_number(), right->get_number())));
+                // auto base_token =
+                std::shared_ptr<Operator> operator_token =
+                    std::static_pointer_cast<Operator>(current_token);
+                std::shared_ptr<Operand> right =
+                    std::static_pointer_cast<Operand>(call_stack.top());
+                call_stack.pop();
+                std::shared_ptr<Operand> left =
+                    std::static_pointer_cast<Operand>(call_stack.top());
+                call_stack.pop();
+                call_stack.push(std::shared_ptr<Operand>(
+                    new Operand(operator_token->operate(left->get_number(),
+                                                        right->get_number()))));
                 break;
             }
             case NUMBER:
@@ -17,34 +27,42 @@ double eval(Queue<Token*> tokens, double variable) {
                 break;
             case VARIABLE:
                 // push in operand to take the place of the variable
-                call_stack.push(new Operand(variable));
+                call_stack.push(
+                    std::shared_ptr<Operand>(new Operand(variable)));
                 break;
             case FUNCTION:
-                FunctionToken* function_token = static_cast<FunctionToken*>(current_token);
-                Operand* num = static_cast<Operand*>(call_stack.pop());
-                call_stack.push(new Operand(function_token->operate(num->get_number())));
+                std::shared_ptr<FunctionToken> function_token =
+                    std::static_pointer_cast<FunctionToken>(current_token);
+                std::shared_ptr<Operand> num =
+                    std::static_pointer_cast<Operand>(call_stack.top());
+                call_stack.pop();
+                call_stack.push(std::shared_ptr<Operand>(
+                    new Operand(function_token->operate(num->get_number()))));
                 break;
         }
     }
-    Token* result = call_stack.pop();
-    double result_number = static_cast<Operand*>(result)->get_number();
-    delete result;
+    std::shared_ptr<Token> result = call_stack.top();
+    call_stack.pop();
+    double result_number =
+        std::static_pointer_cast<Operand>(result)->get_number();
 
-    // clean up the rest of the queue & stack if for some reason they're not empty
-    while (!tokens.empty()) {
-        // delete tokens.pop();
-    }
-    while (!call_stack.empty()) {
-        // delete call_stack.pop();
-    }
+    // clean up the rest of the queue & stack if for some reason they're not
+    // empty while (!tokens.empty()) {
+    //     // delete tokens.pop();
+    // }
+    // while (!call_stack.empty()) {
+    //     // delete call_stack.pop();
+    // }
     return result_number;
 }
 
-Queue<Token*> infix_to_postfix(Queue<Token*> infix) {
-    Queue<Token*> output_queue;
-    Stack<Token*> operator_stack;
+std::queue<std::shared_ptr<Token>> infix_to_postfix(
+    std::queue<std::shared_ptr<Token>> infix) {
+    std::queue<std::shared_ptr<Token>> output_queue;
+    std::stack<std::shared_ptr<Token>> operator_stack;
     while (!infix.empty()) {
-        Token* token = infix.pop();
+        std::shared_ptr<Token> token = infix.front();
+        infix.pop();
         switch (token->TypeOf()) {
             case NUMBER:
                 output_queue.push(token);
@@ -56,46 +74,57 @@ Queue<Token*> infix_to_postfix(Queue<Token*> infix) {
                 operator_stack.push(token);
                 break;
             case OPERATOR:
-                Operator* op = static_cast<Operator*>(token);
+                std::shared_ptr<Operator> op =
+                    std::static_pointer_cast<Operator>(token);
                 if (op->precedence() == -1)
                     operator_stack.push(op);
                 else if (!operator_stack.empty()) {
-                    Token* top = *(operator_stack.begin());
-                    while (!operator_stack.empty() && top->TypeOf() == OPERATOR && static_cast<Operator*>(top)->precedence() > op->precedence()) {
+                    std::shared_ptr<Token> top =
+                        std::shared_ptr<Token>(operator_stack.top());
+                    while (
+                        !operator_stack.empty() && top->TypeOf() == OPERATOR &&
+                        std::static_pointer_cast<Operator>(top)->precedence() >
+                            op->precedence()) {
                         // ignore parenthesis
-                        if (static_cast<Operator*>(top)->precedence() == -1)
+                        if (std::static_pointer_cast<Operator>(top)
+                                ->precedence() == -1)
                             break;
-                        output_queue.push(operator_stack.pop());
+                        output_queue.push(operator_stack.top());
+                        operator_stack.pop();
                         if (!operator_stack.empty())
-                            top = *(operator_stack.begin());
+                            top = std::shared_ptr<Token>(operator_stack.top());
                     }
                     operator_stack.push(op);
-                }
-                else {
+                } else {
                     operator_stack.push(op);
                 }
 
                 if (op->symbol() == ')') {
-                    delete operator_stack.pop();
-                    Token* top = *(operator_stack.begin());
-                    while (!operator_stack.empty() && top->TypeOf() == OPERATOR && static_cast<Operator*>(top)->symbol() != '(') {
-                        output_queue.push(operator_stack.pop());
-                        top = *(operator_stack.begin());
+                    operator_stack.pop();
+                    std::shared_ptr<Token> top =
+                        std::shared_ptr<Token>(operator_stack.top());
+                    while (!operator_stack.empty() &&
+                           top->TypeOf() == OPERATOR &&
+                           std::static_pointer_cast<Operator>(top)->symbol() !=
+                               '(') {
+                        output_queue.push(operator_stack.top());
+                        operator_stack.pop();
+                        top = std::shared_ptr<Token>(operator_stack.top());
                     }
-                    delete operator_stack.pop();
-                    top = *(operator_stack.begin());
-                    if (top->TypeOf() == FUNCTION)
-                        output_queue.push(operator_stack.pop());
+                    operator_stack.pop();
+                    top = std::shared_ptr<Token>(operator_stack.top());
+                    if (top->TypeOf() == FUNCTION) {
+                        output_queue.push(operator_stack.top());
+                        operator_stack.pop();
+                    }
                 }
                 break;
         }
     }
     while (!operator_stack.empty()) {
-        auto op = static_cast<Operator*>(operator_stack.pop());
-        if (op->symbol() != '(' && op->symbol() != ')')
-            output_queue.push(op);
-        else
-            delete op;
+        auto op = std::static_pointer_cast<Operator>(operator_stack.top());
+        operator_stack.pop();
+        if (op->symbol() != '(' && op->symbol() != ')') output_queue.push(op);
     }
     return output_queue;
 }
@@ -120,35 +149,34 @@ int find_mismatched_parenthesis(std::string equation) {
 // takes an infix expression and tokenizes it into a queue
 // supports turning 2x into 2 * x
 // does not assume input checking
-Queue<Token*> tokenize(std::string equation) {
-
+std::queue<std::shared_ptr<Token>> tokenize(std::string equation) {
     if (find_mismatched_parenthesis(equation) != 0)
         throw "mismatched parenthesis";
-    Queue<Token*> tokenized;
+    std::queue<std::shared_ptr<Token>> tokenized;
 
     // load equation into queue, skip whitespace
-    Queue<char> token_chars;
+    std::queue<char> token_chars;
     for (int i = 0; i < equation.size(); i++) {
-
-        if (equation.at(i) != ' ')
-            token_chars.push(equation.at(i));
+        if (equation.at(i) != ' ') token_chars.push(equation.at(i));
     }
 
-    Token* last_token = NULL;
+    std::shared_ptr<Token> last_token = NULL;
     bool unary = false;
     while (!token_chars.empty()) {
         // get 1st character
         std::string token = "";
-        token += token_chars.pop();
+        token += token_chars.front();
+        token_chars.pop();
 
         // tokenize digits;
         if (isdigit(token.at(0))) {
             // check if the top of the queue is a . or a number
-            while (!token_chars.empty() && (isdigit(*token_chars.begin()) ||
-                                            *token_chars.begin() == '.')) {
-                token += token_chars.pop();
+            while (!token_chars.empty() && (isdigit(token_chars.front()) ||
+                                            token_chars.front() == '.')) {
+                token += token_chars.front();
+                token_chars.pop();
             }
-            Token* operand = new Operand(atof(token.c_str()));
+            std::shared_ptr<Token> operand(new Operand(atof(token.c_str())));
             tokenized.push(operand);
             last_token = operand;
         }
@@ -156,21 +184,24 @@ Queue<Token*> tokenize(std::string equation) {
         else if (isalpha(token.at(0))) {
             // this was probably a case like 5x, add a multiplication token
             if (last_token != NULL && last_token->TypeOf() == NUMBER) {
-                last_token = new Operator('*');
+                last_token = std::shared_ptr<Token>(new Operator('*'));
                 tokenized.push(last_token);
             }
-            Token* function_or_variable = NULL;
+            std::shared_ptr<Token> function_or_variable = nullptr;
             // decide if we're working with a variable or a function here
-            if (token_chars.empty() || !isalpha(*token_chars.begin())) {
+            if (token_chars.empty() || !isalpha(token_chars.front())) {
                 // it's variable
-                function_or_variable = new Variable(token.at(0));
+                function_or_variable =
+                    std::shared_ptr<Variable>(new Variable(token.at(0)));
             }
             // it's a function
             else {
-                while (!token_chars.empty() && isalpha(*token_chars.begin())) {
-                    token += token_chars.pop();
+                while (!token_chars.empty() && isalpha(token_chars.front())) {
+                    token += token_chars.front();
+                    token_chars.pop();
                 }
-                function_or_variable = new FunctionToken(token);
+                function_or_variable =
+                    std::shared_ptr<FunctionToken>(new FunctionToken(token));
             }
             tokenized.push(function_or_variable);
             last_token = function_or_variable;
@@ -178,19 +209,20 @@ Queue<Token*> tokenize(std::string equation) {
         // if it's not a letter or a number it's probably a symbol
         else {
             // unary operator, insert a -1 * ()
-            if ((last_token == NULL || last_token->TypeOf() != NUMBER) && token.at(0) == '-') {
-                tokenized.push(new Operand(-1));
-                tokenized.push(new Operator('*'));
-                last_token = new Operator('(');
+            if ((last_token == NULL || last_token->TypeOf() != NUMBER) &&
+                token.at(0) == '-') {
+                tokenized.push(std::shared_ptr<Operand>(new Operand(-1)));
+                tokenized.push(std::shared_ptr<Operator>(new Operator('*')));
+                last_token = std::shared_ptr<Operator>(new Operator('('));
                 unary = true;
-            }
-            else {
-                last_token = new Operator(token.at(0));
+            } else {
+                last_token =
+                    std::shared_ptr<Operator>(new Operator(token.at(0)));
             }
             tokenized.push(last_token);
         }
         if (unary) {
-            last_token = new Operator(')');
+            last_token = std::shared_ptr<Operator>(new Operator(')'));
             tokenized.push(last_token);
             unary = false;
         }

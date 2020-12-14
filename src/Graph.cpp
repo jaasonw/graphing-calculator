@@ -10,18 +10,20 @@ Graph::Graph() : Entity() {
     // set position
     this->set_x(SCREEN_WIDTH / 2);
     this->set_y(SCREEN_HEIGHT / 2);
-    
+
     // create axis
-    this->x_axis = sf::RectangleShape(sf::Vector2f(SCREEN_WIDTH * 1000, LINE_THICKNESS));
-    this->y_axis = sf::RectangleShape(sf::Vector2f(LINE_THICKNESS, SCREEN_HEIGHT * 1000));
+    this->x_axis =
+        sf::RectangleShape(sf::Vector2f(SCREEN_WIDTH * 1000, LINE_THICKNESS));
+    this->y_axis =
+        sf::RectangleShape(sf::Vector2f(LINE_THICKNESS, SCREEN_HEIGHT * 1000));
 
     // color axis
     this->x_axis.setFillColor(AXIS_COLOR);
     this->y_axis.setFillColor(AXIS_COLOR);
 
     // initialize drag stuff
-    this->dragpos1 = sf::Vector2i(0,0);
-    this->dragpos2 = sf::Vector2i(0,0);
+    this->dragpos1 = sf::Vector2i(0, 0);
+    this->dragpos2 = sf::Vector2i(0, 0);
 }
 
 Graph::~Graph() {
@@ -40,46 +42,43 @@ void Graph::step(sf::RenderWindow& window, sf::Event& event, bool poll) {
             this->dragging = true;
             this->dragpos1 = sf::Mouse::getPosition(window);
             this->dragpos2 = sf::Mouse::getPosition(window);
-        }
-        else if (this->dragging) {
+        } else if (this->dragging) {
             this->dragpos1 = dragpos2;
             this->dragpos2 = sf::Mouse::getPosition(window);
             this->set_x(this->get_x() + dragpos2.x - dragpos1.x);
             this->set_y(this->get_y() + dragpos2.y - dragpos1.y);
         }
-    }
-    else {
+    } else {
         this->dragging = false;
     }
     if (poll) {
         // mouse wheel zooming
         if (event.type == sf::Event::MouseWheelScrolled) {
             if (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel) {
-                if (this->zoom + ZOOM_INCREMENT * (event.mouseWheelScroll.delta / 10) > 10)
-                    this->zoom += ZOOM_INCREMENT * (event.mouseWheelScroll.delta / 10);
+                if (this->zoom +
+                        ZOOM_INCREMENT * (event.mouseWheelScroll.delta / 10) >
+                    10)
+                    this->zoom +=
+                        ZOOM_INCREMENT * (event.mouseWheelScroll.delta / 10);
             }
         }
-        if (event.type == sf::Event::KeyPressed && !this->equation_input.is_active()) {
+        if (event.type == sf::Event::KeyPressed &&
+            !this->equation_input.is_active()) {
             // zooming
             if (event.key.code == sf::Keyboard::RBracket) {
                 this->zoom += ZOOM_INCREMENT;
-            }
-            else if (event.key.code == sf::Keyboard::LBracket) {
-                if (zoom > 10)
-                    this->zoom -= ZOOM_INCREMENT;
+            } else if (event.key.code == sf::Keyboard::LBracket) {
+                if (zoom > 10) this->zoom -= ZOOM_INCREMENT;
             }
 
             // panning
             if (event.key.code == sf::Keyboard::Left) {
                 this->set_x(this->get_x() + PAN_INCREMENT);
-            }
-            else if (event.key.code == sf::Keyboard::Right) {
+            } else if (event.key.code == sf::Keyboard::Right) {
                 this->set_x(this->get_x() - PAN_INCREMENT);
-            }
-            else if (event.key.code == sf::Keyboard::Up) {
+            } else if (event.key.code == sf::Keyboard::Up) {
                 this->set_y(this->get_y() + PAN_INCREMENT);
-            }
-            else if (event.key.code == sf::Keyboard::Down) {
+            } else if (event.key.code == sf::Keyboard::Down) {
                 this->set_y(this->get_y() - PAN_INCREMENT);
             }
 
@@ -103,8 +102,7 @@ void Graph::plot_expression(std::string expression, double low, double high) {
     Function* func;
     try {
         func = new Function(expression);
-    }
-    catch(...) {
+    } catch (...) {
         std::cout << "error parsing function: " << expression << std::endl;
         return;
     }
@@ -115,10 +113,12 @@ void Graph::plot_expression(std::string expression, double low, double high) {
 
 void Graph::render(sf::RenderWindow& window) {
     // set positions
-    this->x_axis.setOrigin(sf::Vector2f(this->x_axis.getSize().x / 2, this->x_axis.getSize().y / 2));
+    this->x_axis.setOrigin(sf::Vector2f(this->x_axis.getSize().x / 2,
+                                        this->x_axis.getSize().y / 2));
     this->x_axis.setPosition(sf::Vector2f(this->get_x(), this->get_y()));
 
-    this->y_axis.setOrigin(sf::Vector2f(this->y_axis.getSize().x / 2, this->y_axis.getSize().y / 2));
+    this->y_axis.setOrigin(sf::Vector2f(this->y_axis.getSize().x / 2,
+                                        this->y_axis.getSize().y / 2));
     this->y_axis.setPosition(sf::Vector2f(this->get_x(), this->get_y()));
 
     // draw functions
@@ -136,7 +136,8 @@ void Graph::render_after(sf::RenderWindow& window) {
     sf::Text controls;
     controls.setFont(this->SourceCodePro);
     controls.setCharacterSize(20);
-    controls.setString("Arrow keys: pan\n]: Zoom in\n[: Zoom out\nR: Reset view");
+    controls.setString(
+        "Arrow keys: pan\n]: Zoom in\n[: Zoom out\nR: Reset view");
     window.draw(controls);
 
     // draw functions list

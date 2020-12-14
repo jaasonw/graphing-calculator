@@ -1,13 +1,14 @@
 #pragma once
-#include "constants.h"
-#include "engine/Entity.h"
 #include <SFML/Graphics/Font.hpp>
-#include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window.hpp>
+#include <SFML/Window/Keyboard.hpp>
 #include <string>
 
+#include "constants.h"
+#include "engine/Entity.h"
+
 class EquationInput : public Entity {
-private:
+   private:
     double height = 30;
     double x = 0;
     double y = SCREEN_HEIGHT - height;
@@ -17,7 +18,8 @@ private:
     sf::RectangleShape textbox;
     sf::Color color = sf::Color::Black;
     sf::Font* font;
-public:
+
+   public:
     EquationInput();
     ~EquationInput();
     std::string get_input();

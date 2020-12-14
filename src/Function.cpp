@@ -5,9 +5,9 @@ Function::Function() : Entity() {
     // example test function
     this->function_string = "sin(x)";
     this->postfix = infix_to_postfix(tokenize(function_string));
-    for (auto it = postfix.begin(); it != NULL; it++) {
-        std::cout << **it << std::endl;
-    }
+    // for (auto it = postfix.b; it != postfix.back(); it++) {
+    //     std::cout << **it << std::endl;
+    // }
     this->update_graph();
 
     this->color.r = rand() % 255;
@@ -29,11 +29,11 @@ Function::Function(std::string function_string) : Entity(), function_string(func
     this->update_graph();
 }
 
-Function::~Function() {
-    while (!postfix.empty()) {
-        delete postfix.pop();
-    }
-}
+// Function::~Function() {
+//     while (!postfix.empty()) {
+//         delete postfix.pop();
+//     }
+// }
 
 void Function::step(sf::RenderWindow& window, sf::Event& event, bool poll) {
     // TODO: maybe change this so it plots a point every frame instead

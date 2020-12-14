@@ -1,15 +1,16 @@
 #pragma once
-#include "Token.h"
-#include "rpn_constants.h"
 #include <cmath>
 #include <iostream>
 #include <string>
 
+#include "Token.h"
+#include "rpn_constants.h"
+
 class FunctionToken : public Token {
-private:
+   private:
     std::string function;
 
-public:
+   public:
     FunctionToken();
     FunctionToken(std::string function);
     int TypeOf() const { return FUNCTION; };

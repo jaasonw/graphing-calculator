@@ -1,23 +1,24 @@
 #pragma once
-#include "Entity.h"
-#include "constants.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Event.hpp>
-#include <list>
 #include <iostream>
+#include <list>
+#include <memory>
+
+#include "Entity.h"
+#include "constants.h"
 
 class Engine {
-private:
-    static std::list<Entity*> entities;
+   private:
+    static std::list<std::shared_ptr<Entity>> entities;
     static sf::Font SourceCodePro;
     sf::RenderWindow window;
-    
-public:
+
+   public:
     Engine();
-    ~Engine();
     void run();
     void stop();
-    static Entity* add_entity(Entity* entity);
-    static void remove_entity(Entity* entity);
+    static std::shared_ptr<Entity> add_entity(std::shared_ptr<Entity> entity);
+    static void remove_entity(std::shared_ptr<Entity> entity);
 };

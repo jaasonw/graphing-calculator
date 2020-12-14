@@ -1,18 +1,21 @@
+#include <cctype>
+#include <memory>
+#include <queue>
+#include <stack>
+#include <string>
+
 #include "FunctionToken.h"
 #include "Operand.h"
 #include "Operator.h"
 #include "Token.h"
 #include "Variable.h"
 #include "rpn_constants.h"
-#include "stack_queue/queue.h"
-#include "stack_queue/stack.h"
-#include <cctype>
-#include <string>
 
-double eval(Queue<Token*> tokens, double variable = 0);
+double eval(std::queue<std::shared_ptr<Token>> tokens, double variable = 0);
 
-Queue<Token*> infix_to_postfix(Queue<Token*> infix);
+std::queue<std::shared_ptr<Token>> infix_to_postfix(
+    std::queue<std::shared_ptr<Token>> infix);
 
 int find_mismatched_parenthesis(std::string equation);
 
-Queue<Token*> tokenize(std::string equation);
+std::queue<std::shared_ptr<Token>> tokenize(std::string equation);
