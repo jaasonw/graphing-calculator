@@ -3,6 +3,7 @@
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <string>
+#include <memory>
 
 #include "Function.h"
 #include "constants.h"
@@ -11,16 +12,16 @@
 class FunctionHistory : public Entity {
    private:
     sf::CircleShape dot;
-    sf::Font* font;
+    std::shared_ptr<sf::Font> font;
     sf::Text text;
     std::string function_text;
-    Function* function;
+    std::shared_ptr<Function> function;
 
    public:
     FunctionHistory();
-    FunctionHistory(Function* function, sf::Font& font);
+    FunctionHistory(Function& function, sf::Font& font);
     void step(sf::RenderWindow& window, sf::Event& event, bool poll);
     void render_after(sf::RenderWindow& window);
 
-    Function* get_function() { return this->function; }
+    std::shared_ptr<Function> get_function() { return this->function; }
 };

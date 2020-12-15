@@ -33,7 +33,6 @@ class Function : public Entity {
    public:
     Function();
     Function(std::string function_string);
-    // ~Function();
     void step(sf::RenderWindow& window, sf::Event& event, bool poll);
     void render(sf::RenderWindow& window);
 

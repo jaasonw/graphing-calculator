@@ -20,8 +20,8 @@ class Graph : public Entity {
     const double GRAPH_DEFAULT_ZOOM = 50;
     const double PAN_INCREMENT = 8;
 
-    std::vector<FunctionHistory*> function_history;
-    std::vector<Function*> functions;
+    std::vector<std::shared_ptr<FunctionHistory>> function_history;
+    std::vector<std::shared_ptr<Function>> functions;
     const sf::Color AXIS_COLOR = sf::Color::Green;
     double zoom = GRAPH_DEFAULT_ZOOM;
 
@@ -38,7 +38,6 @@ class Graph : public Entity {
 
    public:
     Graph();
-    ~Graph();
     void step(sf::RenderWindow& window, sf::Event& event, bool poll);
     void plot_expression(std::string expression, double low = -50,
                          double high = 50);

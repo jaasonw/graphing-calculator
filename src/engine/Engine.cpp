@@ -16,7 +16,6 @@ void Engine::run() {
         if (poll) {
             if (event.type == sf::Event::Closed) {
                 window.close();
-                this->stop();
             }
         }
         // step loop
